@@ -2359,7 +2359,7 @@ var AppMaster = /*#__PURE__*/function (_Component) {
       current_ctc: '',
       notice_period: '',
       show: "",
-      formSteps: 2
+      formSteps: 0
     };
     _this.handleChange = _this.handleChange.bind(_assertThisInitialized(_this));
     _this.handleChangeLanguage = _this.handleChangeLanguage.bind(_assertThisInitialized(_this));
@@ -2505,8 +2505,12 @@ var AppMaster = /*#__PURE__*/function (_Component) {
     }
   }, {
     key: "handleSubmit",
-    value: function handleSubmit(e) {
-      console.log(this.state.formErrors);
+    value: function handleSubmit(e, numeric) {
+      if (numeric != '') {
+        this.handleFormSteps(numeric);
+        return false;
+      }
+
       e.preventDefault();
 
       if (this.state.formErrors.fullName === "Perfect!" && this.state.formErrors.birthDate === "" && this.state.formErrors.email === "Perfect!" && this.state.formErrors.gender === "Perfect!" && this.state.formErrors.address === "Perfect!" && this.state.formErrors.houseNumber === "Perfect!" && this.state.formErrors.zipcode === "Perfect!" && this.state.formErrors.preferred_location === 'Perfect!' && this.state.formErrors.expected_ctc === 'Perfect!' && this.state.formErrors.current_ctc === 'Perfect!' && this.state.formErrors.notice_period === 'Perfect!' && this.state.formErrors.file === "ok" && this.state.formErrors.letter === "ok") {
@@ -2528,6 +2532,7 @@ var AppMaster = /*#__PURE__*/function (_Component) {
         return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_components_Form__WEBPACK_IMPORTED_MODULE_4__.default, {
           state: this.state,
           onChange: this.handleChange,
+          handleFormSteps: this.handleFormSteps,
           onSubmit: this.handleSubmit,
           onHandleDate: this.handleDate
         });
@@ -2536,6 +2541,7 @@ var AppMaster = /*#__PURE__*/function (_Component) {
           state: this.state,
           onChange: this.handleChange,
           onSubmit: this.handleSubmit,
+          handleFormSteps: this.handleFormSteps,
           onHandleDate: this.handleDate
         });
       } else if (formSteps === 2) {
@@ -2544,6 +2550,7 @@ var AppMaster = /*#__PURE__*/function (_Component) {
           onChange: this.handleChange,
           onLanguageChange: this.handleChangeLanguage,
           onTechnicalChange: this.onTechnicalChange,
+          handleFormSteps: this.handleFormSteps,
           handleAbilityLang: this.handleAbilityLang,
           onSubmit: this.handleSubmit,
           onHandleDate: this.handleDate
@@ -2894,183 +2901,167 @@ var Form = /*#__PURE__*/function (_Component) {
           onSubmit = _this$props.onSubmit,
           onHandleDate = _this$props.onHandleDate,
           state = _this$props.state;
-      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
-        className: "wrapper-padding",
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("h1", {
-          className: "form-title",
-          children: "Job Application"
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("p", {
-          className: "form-text",
-          children: "In order to apply, please fill the following form."
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("p", {
-          className: "form-subtext",
-          children: ["All fields with ", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("span", {
-            className: "form-asterisk",
-            children: " *"
-          }), " are required."]
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
-          className: "form-wrapper",
-          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("form", {
-            onSubmit: onSubmit,
-            className: "form",
-            noValidate: true,
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("h2", {
-              className: "text-center",
-              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("u", {
-                children: "Basic Details"
-              })
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
-              className: "form-name form-item",
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("label", {
-                className: "form-label",
-                children: ["First and Last Name", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("span", {
-                  className: "form-asterisk",
-                  children: " *"
-                })]
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("input", {
-                className: "form-field",
-                type: "text",
-                name: "fullName",
-                value: state.fullName,
-                onChange: onChange,
-                placeholder: "Vishal Mistry",
-                required: true
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
-                className: "form-message",
-                children: state.formErrors.fullName
+      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("form", {
+        onSubmit: onSubmit,
+        className: "form",
+        noValidate: true,
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("h2", {
+          className: "text-center",
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("u", {
+            children: "Basic Details"
+          })
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+          className: "form-name form-item",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("label", {
+            className: "form-label",
+            children: ["First and Last Name", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("span", {
+              className: "form-asterisk",
+              children: " *"
+            })]
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("input", {
+            className: "form-field",
+            type: "text",
+            name: "fullName",
+            value: state.fullName,
+            onChange: onChange,
+            placeholder: "Vishal Mistry",
+            required: true
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
+            className: "form-message",
+            children: state.formErrors.fullName
+          })]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+          className: "form-email form-item",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("label", {
+            className: "form-label",
+            children: ["Email Address", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("span", {
+              className: "form-asterisk",
+              children: " *"
+            })]
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("input", {
+            className: "form-field",
+            name: "email",
+            type: "email",
+            value: state.email,
+            onChange: onChange,
+            placeholder: "email@example.com",
+            required: true
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
+            className: "form-message",
+            children: state.formErrors.email
+          })]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+          className: "block-birthdate-gender",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+            className: "form-birthdate form-item",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("label", {
+              className: "form-label",
+              children: ["Date of Birth", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("span", {
+                className: "form-asterisk",
+                children: " *"
               })]
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
-              className: "form-email form-item",
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("label", {
-                className: "form-label",
-                children: ["Email Address", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("span", {
-                  className: "form-asterisk",
-                  children: " *"
-                })]
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("input", {
-                className: "form-field",
-                name: "email",
-                type: "email",
-                value: state.email,
-                onChange: onChange,
-                placeholder: "email@example.com",
-                required: true
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
-                className: "form-message",
-                children: state.formErrors.email
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)((react_datepicker__WEBPACK_IMPORTED_MODULE_4___default()), {
+              className: "form-field",
+              name: "birthDate",
+              selected: state.birthDate,
+              onChange: onHandleDate,
+              value: state.birthDate,
+              peekNextMonth: true,
+              showMonthDropdown: true,
+              showYearDropdown: true,
+              dropdownMode: "select",
+              placeholder: "dd/mm/yyyy",
+              required: true
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
+              className: "form-message",
+              children: state.formErrors.birthDate
+            })]
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+            className: "form-gender form-item",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("label", {
+              className: "form-label",
+              children: ["Gender", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("span", {
+                className: "form-asterisk",
+                children: " *"
               })]
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
-              className: "block-birthdate-gender",
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
-                className: "form-birthdate form-item",
-                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("label", {
-                  className: "form-label",
-                  children: ["Date of Birth", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("span", {
-                    className: "form-asterisk",
-                    children: " *"
-                  })]
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)((react_datepicker__WEBPACK_IMPORTED_MODULE_4___default()), {
-                  className: "form-field",
-                  name: "birthDate",
-                  selected: state.birthDate,
-                  onChange: onHandleDate,
-                  value: state.birthDate,
-                  peekNextMonth: true,
-                  showMonthDropdown: true,
-                  showYearDropdown: true,
-                  dropdownMode: "select",
-                  placeholder: "dd/mm/yyyy",
-                  required: true
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
-                  className: "form-message",
-                  children: state.formErrors.birthDate
-                })]
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
-                className: "form-gender form-item",
-                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("label", {
-                  className: "form-label",
-                  children: ["Gender", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("span", {
-                    className: "form-asterisk",
-                    children: " *"
-                  })]
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("select", {
-                  className: "form-field",
-                  name: "gender",
-                  value: state.value,
-                  onChange: onChange,
-                  required: true,
-                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("option", {
-                    children: "Choose your gender"
-                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("option", {
-                    children: "Female"
-                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("option", {
-                    children: "Male"
-                  })]
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
-                  className: "form-message",
-                  children: state.formErrors.gender
-                })]
-              })]
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
-              className: "form-address form-item",
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("label", {
-                className: "form-label",
-                children: ["Address", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("span", {
-                  className: "form-asterisk",
-                  children: " *"
-                })]
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("input", {
-                className: "form-field",
-                name: "address",
-                type: "text",
-                value: state.address,
-                onChange: onChange,
-                placeholder: "Streetname",
-                required: true
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
-                className: "form-message",
-                children: state.formErrors.address
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
-                className: "block-number-zipcode",
-                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
-                  className: "form-housNumber",
-                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("input", {
-                    className: "form-field",
-                    name: "houseNumber",
-                    type: "text",
-                    value: state.houseNumber,
-                    onChange: onChange,
-                    placeholder: "House number",
-                    required: true
-                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
-                    className: "form-message",
-                    children: state.formErrors.houseNumber
-                  })]
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
-                  className: "form-zipecode",
-                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("input", {
-                    className: "form-field",
-                    name: "zipcode",
-                    type: "text",
-                    value: state.zipcode,
-                    onChange: onChange,
-                    placeholder: "Zipcode",
-                    required: true
-                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
-                    className: "form-message",
-                    children: state.formErrors.zipcode
-                  })]
-                })]
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("select", {
+              className: "form-field",
+              name: "gender",
+              value: state.value,
+              onChange: onChange,
+              required: true,
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("option", {
+                children: "Choose your gender"
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("option", {
+                children: "Female"
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("option", {
+                children: "Male"
               })]
             }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
-              className: "form-submit form-item",
-              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("button", {
-                className: "form-item form-submit-button",
-                type: "button",
-                onClick: onSubmit,
-                children: "Submit"
-              })
+              className: "form-message",
+              children: state.formErrors.gender
             })]
+          })]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+          className: "form-address form-item",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("label", {
+            className: "form-label",
+            children: ["Address", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("span", {
+              className: "form-asterisk",
+              children: " *"
+            })]
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("input", {
+            className: "form-field",
+            name: "address",
+            type: "text",
+            value: state.address,
+            onChange: onChange,
+            placeholder: "Streetname",
+            required: true
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
+            className: "form-message",
+            children: state.formErrors.address
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+            className: "block-number-zipcode",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+              className: "form-housNumber",
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("input", {
+                className: "form-field",
+                name: "houseNumber",
+                type: "text",
+                value: state.houseNumber,
+                onChange: onChange,
+                placeholder: "House number",
+                required: true
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
+                className: "form-message",
+                children: state.formErrors.houseNumber
+              })]
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+              className: "form-zipecode",
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("input", {
+                className: "form-field",
+                name: "zipcode",
+                type: "text",
+                value: state.zipcode,
+                onChange: onChange,
+                placeholder: "Zipcode",
+                required: true
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
+                className: "form-message",
+                children: state.formErrors.zipcode
+              })]
+            })]
+          })]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
+          className: "form-submit form-item",
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("button", {
+            className: "form-item form-submit-button",
+            type: "button",
+            onClick: function onClick(e) {
+              return onSubmit(e, 1);
+            },
+            children: "Next Step"
           })
         })]
       });
@@ -3097,8 +3088,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var _Form_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Form.scss */ "./resources/js/components/Form2/Form.scss");
-/* harmony import */ var react_datepicker__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-datepicker */ "./node_modules/react-datepicker/dist/react-datepicker.min.js");
-/* harmony import */ var react_datepicker__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(react_datepicker__WEBPACK_IMPORTED_MODULE_4__);
 /* harmony import */ var react_datepicker_dist_react_datepicker_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-datepicker/dist/react-datepicker.css */ "./node_modules/react-datepicker/dist/react-datepicker.css");
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -3142,215 +3131,290 @@ var Form2 = /*#__PURE__*/function (_Component) {
   }
 
   _createClass(Form2, [{
+    key: "renderLanguages",
+    value: function renderLanguages(languages) {
+      var _this = this;
+
+      var onLanguageChange = this.props.onLanguageChange;
+
+      if (languages && languages.length > 0) {
+        return languages.map(function (d, i) {
+          var language_name = d.language_name,
+              ability = d.ability,
+              is_selected = d.is_selected;
+          return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+            className: "row",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+              className: "col-md-3",
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("label", {
+                htmlFor: language_name,
+                children: language_name
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("input", {
+                id: language_name,
+                name: language_name,
+                className: "",
+                type: "checkbox",
+                defaultChecked: is_selected,
+                onChange: function onChange(e) {
+                  return onLanguageChange(e.target.name, e.target.checked, i);
+                },
+                required: true
+              })]
+            }), _this.readWriteSyntax(language_name, ability, is_selected, i)]
+          }, i);
+        });
+      } else return false;
+    }
+  }, {
+    key: "readWriteSyntax",
+    value: function readWriteSyntax() {
+      var language = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "";
+      var ability = arguments.length > 1 ? arguments[1] : undefined;
+      var is_selected = arguments.length > 2 ? arguments[2] : undefined;
+      var i = arguments.length > 3 ? arguments[3] : undefined;
+      var handleAbilityLang = this.props.handleAbilityLang;
+      var read = ability.read,
+          write = ability.write,
+          speak = ability.speak;
+      var msg = false;
+
+      if (!read && !write && !speak && is_selected) {
+        msg = true;
+      }
+
+      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+        className: "col-md-6",
+        children: [msg ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("span", {
+          style: {
+            color: 'red'
+          },
+          children: "Please select at least one."
+        }) : '', /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+          className: "row",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+            className: "col-sm-2",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("label", {
+              children: "Read\xA0"
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("input", {
+              className: "",
+              type: "checkbox",
+              name: "read",
+              value: read,
+              checked: read,
+              onChange: function onChange(e) {
+                return handleAbilityLang(e.target.name, e.target.checked, i);
+              },
+              disabled: !is_selected,
+              required: true
+            })]
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+            className: "col-sm-2",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("label", {
+              children: "Write\xA0"
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("input", {
+              className: "",
+              type: "checkbox",
+              name: "write",
+              value: write,
+              checked: write,
+              onChange: function onChange(e) {
+                return handleAbilityLang(e.target.name, e.target.checked, i);
+              },
+              disabled: !is_selected,
+              required: true
+            })]
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+            className: "col-sm-2",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("label", {
+              children: "Speak\xA0"
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("input", {
+              className: "",
+              type: "checkbox",
+              name: "speak",
+              value: speak,
+              checked: speak,
+              onChange: function onChange(e) {
+                return handleAbilityLang(e.target.name, e.target.checked, i);
+              },
+              disabled: !is_selected,
+              required: true
+            })]
+          })]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("hr", {})]
+      });
+    }
+  }, {
+    key: "techNoSyntax",
+    value: function techNoSyntax() {
+      var language = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "";
+      var is_selected = arguments.length > 1 ? arguments[1] : undefined;
+      var i = arguments.length > 2 ? arguments[2] : undefined;
+      var n = arguments.length > 3 ? arguments[3] : undefined;
+      var onTechnicalChange = this.props.onTechnicalChange;
+      var msg = false;
+
+      if (language == '' && is_selected) {
+        msg = true;
+      }
+
+      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+        className: "col-md-6",
+        children: [msg ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("span", {
+          style: {
+            color: 'red'
+          },
+          children: "Please choose."
+        }) : '', /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+          className: "row",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+            className: "col-sm-3",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("label", {
+              children: "beginner\xA0"
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("input", {
+              className: "",
+              type: "radio",
+              name: "technology_value_" + n,
+              value: "beginner",
+              checked: language == "beginner" ? true : false,
+              onChange: function onChange(e) {
+                return onTechnicalChange("technology_value", e.target.value, i);
+              },
+              disabled: !is_selected,
+              required: true
+            })]
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+            className: "col-sm-3",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("label", {
+              children: "Mediator\xA0"
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("input", {
+              className: "",
+              type: "radio",
+              name: "technology_value_" + n,
+              value: "Mediator",
+              checked: language == "Mediator" ? true : false,
+              onChange: function onChange(e) {
+                return onTechnicalChange("technology_value", e.target.value, i);
+              },
+              disabled: !is_selected,
+              required: true
+            })]
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+            className: "col-sm-3",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("label", {
+              children: "Expert\xA0"
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("input", {
+              className: "",
+              type: "radio",
+              name: "technology_value_" + n,
+              value: "Expert",
+              checked: language == "Expert" ? true : false,
+              onChange: function onChange(e) {
+                return onTechnicalChange("technology_value", e.target.value, i);
+              },
+              disabled: !is_selected,
+              required: true
+            })]
+          })]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("hr", {})]
+      });
+    }
+  }, {
+    key: "renderTechnicalExperience",
+    value: function renderTechnicalExperience(expertise) {
+      var _this2 = this;
+
+      var onTechnicalChange = this.props.onTechnicalChange;
+
+      if (expertise && expertise.length > 0) {
+        return expertise.map(function (d, i) {
+          var technology_name = d.technology_name,
+              technology_value = d.technology_value,
+              ability = d.ability,
+              is_selected = d.is_selected;
+          return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+            className: "row",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+              className: "col-md-3",
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("label", {
+                htmlFor: technology_name,
+                children: technology_name
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("input", {
+                id: technology_name,
+                name: technology_name,
+                className: "",
+                type: "checkbox",
+                defaultChecked: is_selected,
+                onChange: function onChange(e) {
+                  return onTechnicalChange(e.target.name, e.target.checked, i, true);
+                },
+                required: true
+              })]
+            }), _this2.techNoSyntax(technology_value, is_selected, i, technology_name)]
+          }, i);
+        });
+      } else return false;
+    }
+  }, {
     key: "render",
     value: function render() {
       var _this$props = this.props,
           onChange = _this$props.onChange,
+          onLanguageChange = _this$props.onLanguageChange,
           onSubmit = _this$props.onSubmit,
           onHandleDate = _this$props.onHandleDate,
-          state = _this$props.state;
-      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
-        className: "wrapper-padding",
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("h1", {
-          className: "form-title",
-          children: "Job Application"
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("p", {
-          className: "form-text",
-          children: "In order to apply, please fill the following form."
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("p", {
-          className: "form-subtext",
-          children: ["All fields with ", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("span", {
-            className: "form-asterisk",
-            children: " *"
-          }), " are required."]
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
-          className: "form-wrapper",
-          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("form", {
-            onSubmit: onSubmit,
-            className: "form",
-            noValidate: true,
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("h2", {
-              className: "text-center",
-              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("u", {
-                children: "Education Details"
-              })
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
-              className: "form-name form-item",
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("label", {
-                className: "form-label",
-                children: ["First and Last Name", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("span", {
-                  className: "form-asterisk",
-                  children: " *"
-                })]
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("input", {
-                className: "form-field",
-                type: "text",
-                name: "fullName",
-                value: state.fullName,
-                onChange: onChange,
-                placeholder: "Vishal Mistry",
-                required: true
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
-                className: "form-message",
-                children: state.formErrors.fullName
-              })]
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
-              className: "form-email form-item",
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("label", {
-                className: "form-label",
-                children: ["Email Address", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("span", {
-                  className: "form-asterisk",
-                  children: " *"
-                })]
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("input", {
-                className: "form-field",
-                name: "email",
-                type: "email",
-                value: state.email,
-                onChange: onChange,
-                placeholder: "email@example.com",
-                required: true
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
-                className: "form-message",
-                children: state.formErrors.email
-              })]
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
-              className: "block-birthdate-gender",
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
-                className: "form-birthdate form-item",
-                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("label", {
-                  className: "form-label",
-                  children: ["Date of Birth", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("span", {
-                    className: "form-asterisk",
-                    children: " *"
-                  })]
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)((react_datepicker__WEBPACK_IMPORTED_MODULE_4___default()), {
-                  className: "form-field",
-                  name: "birthDate",
-                  selected: state.birthDate,
-                  onChange: onHandleDate,
-                  value: state.birthDate,
-                  peekNextMonth: true,
-                  showMonthDropdown: true,
-                  showYearDropdown: true,
-                  dropdownMode: "select",
-                  placeholder: "dd/mm/yyyy",
-                  required: true
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
-                  className: "form-message",
-                  children: state.formErrors.birthDate
-                })]
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
-                className: "form-gender form-item",
-                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("label", {
-                  className: "form-label",
-                  children: ["Gender", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("span", {
-                    className: "form-asterisk",
-                    children: " *"
-                  })]
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("select", {
-                  className: "form-field",
-                  name: "gender",
-                  value: state.value,
-                  onChange: onChange,
-                  required: true,
-                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("option", {
-                    children: "Choose your gender"
-                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("option", {
-                    children: "Female"
-                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("option", {
-                    children: "Male"
-                  })]
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
-                  className: "form-message",
-                  children: state.formErrors.gender
-                })]
-              })]
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
-              className: "form-address form-item",
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("label", {
-                className: "form-label",
-                children: ["Address", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("span", {
-                  className: "form-asterisk",
-                  children: " *"
-                })]
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("input", {
-                className: "form-field",
-                name: "address",
-                type: "text",
-                value: state.address,
-                onChange: onChange,
-                placeholder: "Streetname",
-                required: true
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
-                className: "form-message",
-                children: state.formErrors.address
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
-                className: "block-number-zipcode",
-                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
-                  className: "form-housNumber",
-                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("input", {
-                    className: "form-field",
-                    name: "houseNumber",
-                    type: "text",
-                    value: state.houseNumber,
-                    onChange: onChange,
-                    placeholder: "House number",
-                    required: true
-                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
-                    className: "form-message",
-                    children: state.formErrors.houseNumber
-                  })]
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
-                  className: "form-zipecode",
-                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("input", {
-                    className: "form-field",
-                    name: "zipcode",
-                    type: "text",
-                    value: state.zipcode,
-                    onChange: onChange,
-                    placeholder: "Zipcode",
-                    required: true
-                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
-                    className: "form-message",
-                    children: state.formErrors.zipcode
-                  })]
-                })]
-              })]
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("label", {
-              className: "form-label"
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
-              className: "form-file form-item",
-              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("input", {
-                className: "form-field",
-                name: "file",
-                type: "file",
-                accept: ".doc, .docx, .pdf, .rtf, .txt",
-                onChange: onChange
-              })
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
-              className: "form-letter form-item",
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("label", {
-                className: "form-label",
-                children: "Motivational Letter"
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("textarea", {
-                className: "form-field-text form-item",
-                name: "letter",
-                type: "text",
-                value: state.letter,
-                onChange: onChange,
-                placeholder: "Let the company know more about you!"
-              })]
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
+          state = _this$props.state,
+          handleFormSteps = _this$props.handleFormSteps;
+      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("form", {
+        onSubmit: onSubmit,
+        className: "form",
+        noValidate: true,
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("h3", {
+          className: "text-left",
+          children: "Education details"
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+          className: "form-group",
+          children: [this.renderLanguages(state.known_languages), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
+            className: "form-message",
+            children: state.formErrors.fullName
+          })]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("h3", {
+          className: "text-left",
+          children: "Work Experience"
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+          className: "form-group",
+          children: [this.renderTechnicalExperience(state.technical_expertise), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
+            className: "form-message",
+            children: state.formErrors.fullName
+          })]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+          className: "row",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
+            className: "col-md-3",
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
               className: "form-submit form-item",
               children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("button", {
                 className: "form-item form-submit-button",
                 type: "button",
-                onClick: onSubmit,
-                children: "Submit"
+                onClick: function onClick() {
+                  return handleFormSteps(0);
+                },
+                children: "Previous"
               })
-            })]
-          })
+            })
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
+            className: "col-md-3",
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
+              className: "form-submit form-item",
+              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("button", {
+                className: "form-item form-submit-button",
+                type: "button",
+                onClick: function onClick(e) {
+                  return onSubmit(e, 2);
+                },
+                children: "Next Step"
+              })
+            })
+          })]
         })]
       });
     }
@@ -3539,9 +3603,20 @@ var Form3 = /*#__PURE__*/function (_Component) {
       var i = arguments.length > 2 ? arguments[2] : undefined;
       var n = arguments.length > 3 ? arguments[3] : undefined;
       var onTechnicalChange = this.props.onTechnicalChange;
+      var msg = false;
+
+      if (language == '' && is_selected) {
+        msg = true;
+      }
+
       return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
         className: "col-md-6",
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+        children: [msg ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("span", {
+          style: {
+            color: 'red'
+          },
+          children: "Please choose."
+        }) : '', /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
           className: "row",
           children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
             className: "col-sm-3",
@@ -3639,7 +3714,8 @@ var Form3 = /*#__PURE__*/function (_Component) {
           onLanguageChange = _this$props.onLanguageChange,
           onSubmit = _this$props.onSubmit,
           onHandleDate = _this$props.onHandleDate,
-          state = _this$props.state;
+          state = _this$props.state,
+          handleFormSteps = _this$props.handleFormSteps;
       return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("form", {
         onSubmit: onSubmit,
         className: "form",
@@ -3736,14 +3812,35 @@ var Form3 = /*#__PURE__*/function (_Component) {
               children: state.formErrors.notice_period
             })]
           })]
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
-          className: "form-submit form-item",
-          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("button", {
-            className: "form-item form-submit-button",
-            type: "button",
-            onClick: onSubmit,
-            children: "Submit"
-          })
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+          className: "row",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
+            className: "col-md-3",
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
+              className: "form-submit form-item",
+              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("button", {
+                className: "form-item form-submit-button",
+                type: "button",
+                onClick: function onClick() {
+                  return handleFormSteps(1);
+                },
+                children: "Previous"
+              })
+            })
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
+            className: "col-md-3",
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
+              className: "form-submit form-item",
+              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("button", {
+                className: "form-item form-submit-button",
+                type: "button",
+                onClick: function onClick(e) {
+                  return onSubmit(e, '');
+                },
+                children: "Submit"
+              })
+            })
+          })]
         })]
       });
     }

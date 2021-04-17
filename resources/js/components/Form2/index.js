@@ -3,188 +3,248 @@ import "./Form.scss";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 class Form2 extends Component {
-  render() {
-    const { onChange, onSubmit, onHandleDate, state } = this.props;
+  renderLanguages(languages) {
+    const { onLanguageChange } = this.props;
+    if (languages && languages.length > 0) {
+      return languages.map((d, i) => {
+        const { language_name, ability, is_selected } = d;
+        return (
+          <div key={i} className="row">
+            <div className="col-md-3">
+              <label htmlFor={language_name}>{language_name}</label>
+              <input
+                id={language_name}
+                name={language_name}
+                className=""
+                type="checkbox"
+                defaultChecked={is_selected}
+                onChange={(e) =>
+                  onLanguageChange(e.target.name, e.target.checked, i)
+                }
+                required
+              />
+            </div>
+            {this.readWriteSyntax(language_name, ability, is_selected, i)}
+          </div>
+        );
+      });
+    } else return false;
+  }
+  readWriteSyntax(language = "", ability, is_selected, i) {
+    const { handleAbilityLang } = this.props;
+    const { read, write, speak } = ability;
+    var msg =  false;
+    if(!read && !write && !speak && is_selected){
+        msg = true;
+    }
     return (
-      <div className="wrapper-padding">
-        <h1 className="form-title">Job Application</h1>
-        <p className="form-text">
-          In order to apply, please fill the following form.
-        </p>
-        <p className="form-subtext">
-          All fields with <span className="form-asterisk"> *</span> are
-          required.
-        </p>
+      <div className="col-md-6">
+          {
+          msg ?
+          <span style={{color:'red'}}>Please select at least one.</span>:''
+          }
 
-        <div className="form-wrapper">
+        <div className="row">
+          <div className="col-sm-2">
+            <label>Read&nbsp;</label>
+            <input
+              className=""
+              type="checkbox"
+              name="read"
+              value={read}
+              checked={read}
+              onChange={(e) =>
+                handleAbilityLang(e.target.name, e.target.checked, i)
+              }
+              disabled={!is_selected}
+              required
+            />
+          </div>
+          <div className="col-sm-2">
+            <label>Write&nbsp;</label>
+            <input
+              className=""
+              type="checkbox"
+              name="write"
+              value={write}
+              checked={write}
+              onChange={(e) =>
+                handleAbilityLang(e.target.name, e.target.checked, i)
+              }
+              disabled={!is_selected}
+              required
+            />
+          </div>
+          <div className="col-sm-2">
+            <label>Speak&nbsp;</label>
+            <input
+              className=""
+              type="checkbox"
+              name="speak"
+              value={speak}
+              checked={speak}
+              onChange={(e) =>
+                handleAbilityLang(e.target.name, e.target.checked, i)
+              }
+              disabled={!is_selected}
+              required
+            />
+          </div>
+        </div>
+        <hr />
+      </div>
+    );
+  }
+  techNoSyntax(language = "", is_selected, i, n) {
+    const { onTechnicalChange } = this.props;
+    var msg =  false;
+    if(language == '' && is_selected){
+        msg = true;
+    }
+    return (
+      <div className="col-md-6">
+           {
+          msg ?
+          <span style={{color:'red'}}>Please choose.</span>:''
+          }
+        <div className="row">
+          <div className="col-sm-3">
+            <label>beginner&nbsp;</label>
+            <input
+              className=""
+              type="radio"
+              name={"technology_value_" + n}
+              value={"beginner"}
+              checked={language == "beginner" ? true : false}
+              onChange={(e) =>
+                onTechnicalChange("technology_value", e.target.value, i)
+              }
+              disabled={!is_selected}
+              required
+            />
+          </div>
+          <div className="col-sm-3">
+            <label>Mediator&nbsp;</label>
+            <input
+              className=""
+              type="radio"
+              name={"technology_value_" + n}
+              value={"Mediator"}
+              checked={language == "Mediator" ? true : false}
+              onChange={(e) =>
+                onTechnicalChange("technology_value", e.target.value, i)
+              }
+              disabled={!is_selected}
+              required
+            />
+          </div>
+          <div className="col-sm-3">
+            <label>Expert&nbsp;</label>
+            <input
+              className=""
+              type="radio"
+              name={"technology_value_" + n}
+              value={"Expert"}
+              checked={language == "Expert" ? true : false}
+              onChange={(e) =>
+                onTechnicalChange("technology_value", e.target.value, i)
+              }
+              disabled={!is_selected}
+              required
+            />
+          </div>
+        </div>
+        <hr />
+      </div>
+    );
+  }
 
+  renderTechnicalExperience(expertise) {
+    const { onTechnicalChange } = this.props;
+    if (expertise && expertise.length > 0) {
+      return expertise.map((d, i) => {
+        const { technology_name, technology_value, ability, is_selected } = d;
+        return (
+          <div key={i} className="row">
+            <div className="col-md-3">
+              <label htmlFor={technology_name}>{technology_name}</label>
+              <input
+                id={technology_name}
+                name={technology_name}
+                className=""
+                type="checkbox"
+                defaultChecked={is_selected}
+                onChange={(e) =>
+                  onTechnicalChange(e.target.name, e.target.checked, i, true)
+                }
+                required
+              />
+            </div>
+            {this.techNoSyntax(
+              technology_value,
+              is_selected,
+              i,
+              technology_name
+            )}
+          </div>
+        );
+      });
+    } else return false;
+  }
+  render() {
+    const {
+      onChange,
+      onLanguageChange,
+      onSubmit,
+      onHandleDate,
+      state,
+      handleFormSteps,
+    } = this.props;
+    return (
           <form onSubmit={onSubmit} className="form" noValidate>
             {/* name */}
-            <h2 className="text-center"><u>Education Details</u></h2>
-            <div className="form-name form-item">
-              <label className="form-label">
-                First and Last Name<span className="form-asterisk"> *</span>
-              </label>
-              <input
-                className="form-field"
-                type="text"
-                name="fullName"
-                value={state.fullName}
-                onChange={onChange}
-                placeholder="Vishal Mistry"
-                required
-              />
+            <h3 className="text-left">
+            Education details
+            </h3>
+            <div className="form-group">
+              {this.renderLanguages(state.known_languages)}
               <div className="form-message">{state.formErrors.fullName}</div>
             </div>
-            {/* email */}
-            <div className="form-email form-item">
-              <label className="form-label">
-                Email Address<span className="form-asterisk"> *</span>
-              </label>
-              <input
-                className="form-field"
-                name="email"
-                type="email"
-                value={state.email}
-                onChange={onChange}
-                placeholder="email@example.com"
-                required
-              />
-              <div className="form-message">{state.formErrors.email}</div>
+            <h3 className="text-left">
+            Work Experience
+            </h3>
+            <div className="form-group">
+              {this.renderTechnicalExperience(state.technical_expertise)}
+              <div className="form-message">{state.formErrors.fullName}</div>
             </div>
-            {/* birthdate */}
-            <div className="block-birthdate-gender">
-              <div className="form-birthdate form-item">
-                <label className="form-label">
-                  Date of Birth<span className="form-asterisk"> *</span>
-                </label>
-                <DatePicker
-                  className="form-field"
-                  name="birthDate"
-                  selected={state.birthDate}
-                  onChange={onHandleDate}
-                  value={state.birthDate}
-                  peekNextMonth
-                  showMonthDropdown
-                  showYearDropdown
-                  dropdownMode="select"
-                  placeholder="dd/mm/yyyy"
-                  required
-                />
-                {/* <input
-                  className="form-field"
-                  name="birthDate"
-                  value={state.birthDate}
-                  placeholder="dd/mm/yyyy"
-                  required
-                /> */}
-                <div className="form-message">{state.formErrors.birthDate}</div>
-              </div>
 
-              {/* gender */}
-              <div className="form-gender form-item">
-                <label className="form-label">
-                  Gender<span className="form-asterisk"> *</span>
-                </label>
 
-                <select
-                  className="form-field"
-                  name="gender"
-                  value={state.value}
-                  onChange={onChange}
-                  required
-                >
-                  <option>Choose your gender</option>
-                  <option>Female</option>
-                  <option>Male</option>
-                </select>
-                <div className="form-message">{state.formErrors.gender}</div>
-              </div>
-            </div>
-            {/* address */}
-            <div className="form-address form-item">
-              <label className="form-label">
-                Address<span className="form-asterisk"> *</span>
-              </label>
-              <input
-                className="form-field"
-                name="address"
-                type="text"
-                value={state.address}
-                onChange={onChange}
-                placeholder="Streetname"
-                required
-              />
-              <div className="form-message">{state.formErrors.address}</div>
-
-              {/* house number */}
-              <div className="block-number-zipcode">
-                <div className="form-housNumber">
-                  <input
-                    className="form-field"
-                    name="houseNumber"
-                    type="text"
-                    value={state.houseNumber}
-                    onChange={onChange}
-                    placeholder="House number"
-                    required
-                  />
-                  <div className="form-message">
-                    {state.formErrors.houseNumber}
-                  </div>
+            <div className="row">
+                <div className="col-md-3">
+                    <div className="form-submit form-item">
+                        <button
+                        className="form-item form-submit-button"
+                        type="button"
+                        onClick={() => handleFormSteps(0)}>
+                        Previous</button>
+                    </div>
+                     {/** Previous step */}
                 </div>
-
-                {/* zipcode */}
-                <div className="form-zipecode">
-                  <input
-                    className="form-field"
-                    name="zipcode"
-                    type="text"
-                    value={state.zipcode}
-                    onChange={onChange}
-                    placeholder="Zipcode"
-                    required
-                  />
-                  <div className="form-message">{state.formErrors.zipcode}</div>
+                <div className="col-md-3">
+                    {/* Final submit */}
+                        <div className="form-submit form-item">
+                        <button
+                            className="form-item form-submit-button"
+                            type="button"
+                            onClick={(e) => onSubmit(e,2)}
+                        >
+                            Next Step
+                        </button>
+                        </div>
                 </div>
-              </div>
             </div>
-            {/* file */}
-            <label className="form-label" />
-            <div className="form-file form-item">
-              <input
-                className="form-field"
-                name="file"
-                type="file"
-                accept=".doc, .docx, .pdf, .rtf, .txt"
-                onChange={onChange}
-              />
-            </div>
-            {/* motivational letter */}
-            <div className="form-letter form-item">
-              <label className="form-label">Motivational Letter</label>
-              <textarea
-                className="form-field-text form-item"
-                name="letter"
-                type="text"
-                value={state.letter}
-                onChange={onChange}
-                placeholder="Let the company know more about you!"
-              />
-            </div>
-            {/* submit */}
-            <div className="form-submit form-item">
-              <button
-                className="form-item form-submit-button"
-                type="button"
-                onClick={onSubmit}
-              >
-                Submit
-              </button>
-            </div>
+
           </form>
-        </div>
-      </div>
     );
   }
 }

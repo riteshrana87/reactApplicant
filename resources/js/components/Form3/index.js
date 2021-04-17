@@ -97,8 +97,16 @@ class Form3 extends Component {
   }
   techNoSyntax(language = "", is_selected, i, n) {
     const { onTechnicalChange } = this.props;
+    var msg =  false;
+    if(language == '' && is_selected){
+        msg = true;
+    }
     return (
       <div className="col-md-6">
+           {
+          msg ?
+          <span style={{color:'red'}}>Please choose.</span>:''
+          }
         <div className="row">
           <div className="col-sm-3">
             <label>beginner&nbsp;</label>
@@ -190,6 +198,7 @@ class Form3 extends Component {
       onSubmit,
       onHandleDate,
       state,
+      handleFormSteps,
     } = this.props;
     return (
           <form onSubmit={onSubmit} className="form" noValidate>
@@ -237,17 +246,31 @@ class Form3 extends Component {
               </div>
             </div>
             {/* Preferred Location */}
-
-            {/* Final submit */}
-            <div className="form-submit form-item">
-              <button
-                className="form-item form-submit-button"
-                type="button"
-                onClick={onSubmit}
-              >
-                Submit
-              </button>
+            <div className="row">
+                <div className="col-md-3">
+                    <div className="form-submit form-item">
+                        <button
+                        className="form-item form-submit-button"
+                        type="button"
+                        onClick={() => handleFormSteps(1)}>
+                        Previous</button>
+                    </div>
+                     {/** Previous step */}
+                </div>
+                <div className="col-md-3">
+                    {/* Final submit */}
+                        <div className="form-submit form-item">
+                        <button
+                            className="form-item form-submit-button"
+                            type="button"
+                            onClick={(e) => onSubmit(e,'')}
+                        >
+                            Submit
+                        </button>
+                        </div>
+                </div>
             </div>
+
           </form>
     );
   }

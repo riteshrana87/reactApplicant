@@ -94,7 +94,7 @@ class AppMaster extends Component {
       current_ctc:'',
       notice_period : '',
       show: "",
-      formSteps:2
+      formSteps:0
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -248,8 +248,11 @@ class AppMaster extends Component {
     );
   }
 
-  handleSubmit(e) {
-    console.log(this.state.formErrors);
+  handleSubmit(e,numeric) {
+    if(numeric != ''){
+        this.handleFormSteps(numeric);
+        return false;
+    }
     e.preventDefault();
     if (
       this.state.formErrors.fullName === "Perfect!" &&
@@ -287,6 +290,7 @@ class AppMaster extends Component {
             <Form
               state={this.state}
               onChange={this.handleChange}
+              handleFormSteps={this.handleFormSteps}
               onSubmit={this.handleSubmit}
               onHandleDate={this.handleDate}
             />
@@ -297,6 +301,7 @@ class AppMaster extends Component {
               state={this.state}
               onChange={this.handleChange}
               onSubmit={this.handleSubmit}
+              handleFormSteps={this.handleFormSteps}
               onHandleDate={this.handleDate}
             />
         )
@@ -307,6 +312,7 @@ class AppMaster extends Component {
               onChange={this.handleChange}
               onLanguageChange={this.handleChangeLanguage}
               onTechnicalChange={this.onTechnicalChange}
+              handleFormSteps={this.handleFormSteps}
               handleAbilityLang={this.handleAbilityLang}
               onSubmit={this.handleSubmit}
               onHandleDate={this.handleDate}

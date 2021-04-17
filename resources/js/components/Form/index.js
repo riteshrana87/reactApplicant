@@ -6,17 +6,7 @@ class Form extends Component {
   render() {
     const { onChange, onSubmit, onHandleDate, state } = this.props;
     return (
-      <div className="wrapper-padding">
-        <h1 className="form-title">Job Application</h1>
-        <p className="form-text">
-          In order to apply, please fill the following form.
-        </p>
-        <p className="form-subtext">
-          All fields with <span className="form-asterisk"> *</span> are
-          required.
-        </p>
 
-        <div className="form-wrapper">
 
           <form onSubmit={onSubmit} className="form" noValidate>
             {/* name */}
@@ -166,14 +156,12 @@ class Form extends Component {
               <button
                 className="form-item form-submit-button"
                 type="button"
-                onClick={onSubmit}
+                onClick={(e) => onSubmit(e,1)}
               >
-                Submit
+                Next Step
               </button>
             </div>
           </form>
-        </div>
-      </div>
     );
   }
 }
