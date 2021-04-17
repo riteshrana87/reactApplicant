@@ -1,0 +1,53 @@
+
+@import '../../assets/core/setting';
+
+
+.header{
+    position: fixed;
+    background-color: $mediumGreen;
+    width: 100%;
+    height:60px;
+    top:0;
+    left: 0;
+    z-index: 99;
+}
+
+.hero {
+    height: 300px;
+    width: 100%;
+}
+
+.cover{
+    background-image: url(../../assets/images/Workspace.jpg);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 350px;
+    width: 100%;
+}
+
+@media all and (min-width: 500px) {
+    .cover{
+        height: 500px;
+    }
+}
+
+@media all and (min-width: 1000px) {
+    .cover{
+        height: 666px;
+    }
+    .header{
+        height: 70px;
+    }
+}
+
+@media all and (min-width: 1400px) {
+    .cover{
+        height: 900px;
+    }
+    .header{
+        height: 100px;
+    }
+
+}
+

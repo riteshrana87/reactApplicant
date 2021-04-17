@@ -1,0 +1,63 @@
+@import '../../assets/core/setting';
+.footer {
+    border-top: 1px solid $lightGrey;
+}
+
+.footer-wrapper {
+    width: 50%;
+    margin: auto;
+    padding-bottom: 45px;
+    text-align: center;
+}
+
+.footer-faq {
+    padding: 30px 0 20px 0;
+    color: $mediumGrey;
+}
+
+.footer-nav {
+    list-style-type: none;
+    margin-top: 20px;
+}
+
+.footer-nav-item {
+    padding: 8px
+}
+
+.fab {
+    padding-right: 8px;
+}
+
+.footer-link {
+    color: $mediumGrey;
+    text-decoration: none;
+}
+
+@media all and (min-width: 500px) {
+    .footer-wrapper {
+        display: flex;
+        justify-content: space-around;
+        width: 100%;
+    }
+    .footer-nav {
+        display: flex;
+    }
+    .footer-nav-item {
+        padding-right: 2px;
+    }
+}
+
+@media all and (min-width: 1000px) {
+    .footer-wrapper {
+        margin-top: 25px; 
+        font-size: $fontMedium;
+    }
+}
+
+@media all and (min-width: 1400px) {
+    .footer-wrapper {
+        margin-top: 35px; 
+
+        font-size: 23px;
+    }
+}

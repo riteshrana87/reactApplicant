@@ -1,0 +1,82 @@
+@import "../../assets/core/setting";
+.toolbar__navigation {
+    display: flex;
+    align-items: center;
+    height: 100%;
+}
+
+.toolbar__logo {
+    color: $mediumGrey;
+    font-family: $fontText;
+    margin-left: 0.5rem;
+    text-transform: uppercase;
+}
+
+.toolbar__logo a {
+    text-decoration: none;
+    font-size: 1.5rem;
+}
+
+.spacer {
+    flex: 0.5;
+}
+
+.toolbar__navigation-items {
+    text-transform: uppercase;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: none;
+}
+
+.toolbar__navigation-items a:hover,
+.toolbar__navigation-items a:active {
+    color: rgb(155, 215, 235);
+    border: white;
+}
+
+.toolbar__navigation-itemlink {
+    text-decoration: none;
+    color: $mediumGrey;
+    font-family: $fontText;
+}
+
+@media all and (min-width: 500px) {
+    .toolbar__navigation {
+        display: flex;
+        justify-content: space-between;
+    }
+    .toolbar__navigation-items {
+        display: flex;
+    }
+    .toolbar__navigation-item {
+        display: flex;
+        margin: 13px;
+    }
+    .toolbar__toogle-button {
+        display: none;
+    }
+    .toolbar__logo {
+        margin-left: 1rem;
+    }
+}
+
+@media all and (min-width: 1000px) {
+    .toolbar__logo {
+        margin-left: 1.5rem;
+        font-size: 20px;
+    }
+    .toolbar__navigation-items {
+        font-size: 20px;
+    }
+}
+
+@media all and (min-width: 1400px) {
+  .toolbar__logo {
+    font-size: 20px;
+
+  }
+  .toolbar__navigation-items {
+      font-size: 20px;
+  }
+}
