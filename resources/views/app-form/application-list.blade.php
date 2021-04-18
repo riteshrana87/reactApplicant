@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-12">
@@ -20,7 +20,7 @@
 
                                 <form method="get" class="row">
                                     <div class="col-md-3">
-                                        <input class="form-control" type="text" placeholder="Search by Email, Name"/>
+                                        <input class="form-control" name="search_applicant" value="{{$search}}" type="text" placeholder="Search by Email, Name"/>
                                     </div>
                                     <div class="col-md-3">
                                         <button class="btn btn-primary" type="submit">Submit</button>
@@ -28,7 +28,7 @@
                                 </form>
                             <div class="row">
 
-                                    <table class="table table-hover">
+                                    <table id="job_applicant" class="table table-hover">
                                         <thead>
                                         <tr>
                                             <th>Full Name</th>

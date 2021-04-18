@@ -17,11 +17,11 @@ class CreateTechnicalExperiencesTable extends Migration
             $table->id();
             $table->unsignedBigInteger('app_id');
             $table->string('technology_name',100);
-            $table->string('technology_value',100);
+            $table->string('technology_value',100)->nullable();
             $table->timestamps();
 
              //Foreign key references
-            $table->foreign('app_id')->references('id')->on('job_applications');
+            $table->foreign('app_id')->references('id')->on('job_applications')->onDelete('cascade');
         });
     }
 

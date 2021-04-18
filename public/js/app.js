@@ -2237,7 +2237,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_Form2__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/Form2 */ "./resources/js/components/Form2/index.js");
 /* harmony import */ var _components_Form3__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/Form3 */ "./resources/js/components/Form3/index.js");
 /* harmony import */ var _components_Footer__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/Footer */ "./resources/js/components/Footer/index.js");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+/* harmony import */ var _services__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./services */ "./resources/js/services.js");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
@@ -2261,6 +2262,7 @@ function _assertThisInitialized(self) { if (self === void 0) { throw new Referen
 function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
 
 
 
@@ -2386,10 +2388,104 @@ var AppMaster = /*#__PURE__*/function (_Component) {
     _this.handleExperience = _this.handleExperience.bind(_assertThisInitialized(_this));
     _this.handleRemoveExp = _this.handleRemoveExp.bind(_assertThisInitialized(_this));
     _this.handleAddMoreExp = _this.handleAddMoreExp.bind(_assertThisInitialized(_this));
+    _this.resetStates = _this.resetStates.bind(_assertThisInitialized(_this));
     return _this;
-  }
+  } //reset state object
+
 
   _createClass(AppMaster, [{
+    key: "resetStates",
+    value: function resetStates() {
+      var d = {
+        fullName: "",
+        birthDate: new Date(),
+        email: "",
+        gender: "",
+        address: "",
+        houseNumber: "",
+        zipcode: "",
+        file: new FileReader(),
+        letter: "",
+        submitting: true,
+        formErrors: {
+          fullName: "",
+          birthDate: "",
+          email: "",
+          gender: "",
+          address: "",
+          houseNumber: "",
+          zipcode: "",
+          file: "ok",
+          letter: "ok",
+          preferred_location: "",
+          expected_ctc: "",
+          current_ctc: "",
+          notice_period: ""
+        },
+        isModalOpen: false,
+        work_experience: [{
+          company: '',
+          designation: '',
+          from_date: '',
+          to_date: ''
+        }],
+        education_details: [{
+          education_board: '',
+          year: '',
+          percentage: ''
+        }],
+        known_languages: [{
+          language_name: "english",
+          is_selected: false,
+          ability: {
+            read: false,
+            write: false,
+            speak: false
+          }
+        }, {
+          language_name: "gujarati",
+          is_selected: false,
+          ability: {
+            read: false,
+            write: false,
+            speak: false
+          }
+        }, {
+          language_name: "hindi",
+          is_selected: false,
+          ability: {
+            read: false,
+            write: false,
+            speak: false
+          }
+        }],
+        technical_expertise: [{
+          technology_name: 'php',
+          is_selected: false,
+          technology_value: ''
+        }, {
+          technology_name: 'mysql',
+          is_selected: false,
+          technology_value: ''
+        }, {
+          technology_name: 'laravel',
+          is_selected: false,
+          technology_value: ''
+        }, {
+          technology_name: 'reactjs',
+          is_selected: false,
+          technology_value: ''
+        }],
+        preferred_location: '',
+        expected_ctc: '',
+        current_ctc: '',
+        notice_period: '',
+        show: "",
+        formSteps: 0
+      };
+      this.setState(d);
+    }
+  }, {
     key: "handleDate",
     value: function handleDate(date) {
       this.setState({
@@ -2548,8 +2644,6 @@ var AppMaster = /*#__PURE__*/function (_Component) {
           name = _e$target.name,
           value = _e$target.value;
       var formErrors = this.state.formErrors;
-      console.log("name: ", name);
-      console.log("value : ", value);
 
       switch (name) {
         case "fullName":
@@ -2637,6 +2731,7 @@ var AppMaster = /*#__PURE__*/function (_Component) {
       e.preventDefault();
 
       if (this.state.formErrors.fullName === "Perfect!" && this.state.formErrors.birthDate === "" && this.state.formErrors.email === "Perfect!" && this.state.formErrors.gender === "Perfect!" && this.state.formErrors.address === "Perfect!" && this.state.formErrors.houseNumber === "Perfect!" && this.state.formErrors.zipcode === "Perfect!" && this.state.formErrors.preferred_location === 'Perfect!' && this.state.formErrors.expected_ctc === 'Perfect!' && this.state.formErrors.current_ctc === 'Perfect!' && this.state.formErrors.notice_period === 'Perfect!' && this.state.formErrors.file === "ok" && this.state.formErrors.letter === "ok") {
+        this.final_submission(this.state);
         sweetalert2__WEBPACK_IMPORTED_MODULE_2___default().fire("Thanks for submitting!", "We will contact you soon!", "success");
       } else {
         sweetalert2__WEBPACK_IMPORTED_MODULE_2___default().fire({
@@ -2656,6 +2751,17 @@ var AppMaster = /*#__PURE__*/function (_Component) {
       } else {
         return true;
       }
+    }
+  }, {
+    key: "final_submission",
+    value: function final_submission(d) {
+      var _this2 = this;
+
+      (0,_services__WEBPACK_IMPORTED_MODULE_8__.submit_application)(d).then(function (response) {
+        _this2.handleFormSteps(0);
+
+        _this2.resetStates();
+      });
     }
     /**Form error handling */
 
@@ -2691,7 +2797,7 @@ var AppMaster = /*#__PURE__*/function (_Component) {
       var formSteps = this.state.formSteps;
 
       if (formSteps === 0) {
-        return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_components_Form__WEBPACK_IMPORTED_MODULE_4__.default, {
+        return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_components_Form__WEBPACK_IMPORTED_MODULE_4__.default, {
           state: this.state,
           onChange: this.handleChange,
           onError: this.stepZeroFormError,
@@ -2700,7 +2806,7 @@ var AppMaster = /*#__PURE__*/function (_Component) {
           onHandleDate: this.handleDate
         });
       } else if (formSteps === 1) {
-        return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_components_Form2__WEBPACK_IMPORTED_MODULE_5__.default, {
+        return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_components_Form2__WEBPACK_IMPORTED_MODULE_5__.default, {
           state: this.state,
           onChange: this.handleChange,
           handleAddMoreEducation: this.handleAddMoreEducation,
@@ -2714,7 +2820,7 @@ var AppMaster = /*#__PURE__*/function (_Component) {
           onHandleDate: this.handleDate
         });
       } else if (formSteps === 2) {
-        return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_components_Form3__WEBPACK_IMPORTED_MODULE_6__.default, {
+        return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_components_Form3__WEBPACK_IMPORTED_MODULE_6__.default, {
           state: this.state,
           onChange: this.handleChange,
           onLanguageChange: this.handleChangeLanguage,
@@ -2729,29 +2835,29 @@ var AppMaster = /*#__PURE__*/function (_Component) {
   }, {
     key: "render",
     value: function render() {
-      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("div", {
+      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)("div", {
         className: "AppMaster",
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_components_Header__WEBPACK_IMPORTED_MODULE_3__.default, {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("main", {
-          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("div", {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_components_Header__WEBPACK_IMPORTED_MODULE_3__.default, {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("main", {
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)("div", {
             className: "wrapper-padding",
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("h1", {
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("h1", {
               className: "form-title",
               children: "Job Application"
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("p", {
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("p", {
               className: "form-text",
               children: "In order to apply, please fill the following form."
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("p", {
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)("p", {
               className: "form-subtext",
-              children: ["All fields with ", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("span", {
+              children: ["All fields with ", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("span", {
                 className: "form-asterisk",
                 children: " *"
               }), " are required."]
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("div", {
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("div", {
               className: "form-wrapper",
               children: this.onFormChangeSteps()
             })]
           })
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_components_Footer__WEBPACK_IMPORTED_MODULE_7__.default, {})]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_components_Footer__WEBPACK_IMPORTED_MODULE_7__.default, {})]
       });
     }
   }]);
@@ -3941,6 +4047,7 @@ var Form3 = /*#__PURE__*/function (_Component) {
             className: "row",
             children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("select", {
               onChange: onChange,
+              value: state.preferred_location,
               className: "form-field",
               name: "preferred_location",
               children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("option", {
@@ -4538,6 +4645,263 @@ function unregister() {
     });
   }
 }
+
+/***/ }),
+
+/***/ "./resources/js/services.js":
+/*!**********************************!*\
+  !*** ./resources/js/services.js ***!
+  \**********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "submit_application": () => (/* binding */ submit_application)
+/* harmony export */ });
+/* harmony import */ var _utils_Http__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./utils/Http */ "./resources/js/utils/Http.js");
+/* harmony import */ var _utils_Transformer__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./utils/Transformer */ "./resources/js/utils/Transformer.js");
+
+
+function submit_application(data) {
+  return new Promise(function (resolve, reject) {
+    _utils_Http__WEBPACK_IMPORTED_MODULE_0__.default.post('application_form', data).then(function (res) {
+      var data = _utils_Transformer__WEBPACK_IMPORTED_MODULE_1__.default.fetch(res.data);
+      return resolve(data);
+    })["catch"](function (err) {
+      var statusCode = err.response.status;
+      var data = {
+        error: null,
+        statusCode: statusCode
+      };
+
+      if (statusCode === 422) {
+        var resetErrors = {
+          errors: err.response.data,
+          replace: false,
+          searchStr: '',
+          replaceStr: ''
+        };
+        data.error = resetErrors.errors;
+      } else if (statusCode === 401) {
+        data.error = err.response.data.message;
+      }
+
+      return reject(data);
+    });
+  });
+}
+
+/***/ }),
+
+/***/ "./resources/js/utils/Http.js":
+/*!************************************!*\
+  !*** ./resources/js/utils/Http.js ***!
+  \************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+/* eslint-disable no-console */
+
+var version = 'v1';
+var API_URL = 'http://127.0.0.1:8000/api/';
+console.log(API_URL);
+(axios__WEBPACK_IMPORTED_MODULE_0___default().defaults.baseURL) = API_URL;
+(axios__WEBPACK_IMPORTED_MODULE_0___default().defaults.headers.common.Accept) = 'application/json';
+(axios__WEBPACK_IMPORTED_MODULE_0___default().defaults.headers.common["X-CSRF-TOKEN"]) = window.token.csrfToken;
+(axios__WEBPACK_IMPORTED_MODULE_0___default().defaults.headers.common["X-Requested-With"]) = 'XMLHttpRequest';
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((axios__WEBPACK_IMPORTED_MODULE_0___default()));
+
+/***/ }),
+
+/***/ "./resources/js/utils/Transformer.js":
+/*!*******************************************!*\
+  !*** ./resources/js/utils/Transformer.js ***!
+  \*******************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ Transformer)
+/* harmony export */ });
+/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
+/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_0__);
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+/* ============
+ * Transformer
+ * ============
+ *
+ * The base transformer.
+ *
+ * Transformers are used to transform the fetched data
+ * to a more suitable format.
+ * For instance, when the fetched data contains snake_cased values,
+ * they will be camelCased.
+ */
+
+
+var Transformer = /*#__PURE__*/function () {
+  function Transformer() {
+    _classCallCheck(this, Transformer);
+  }
+
+  _createClass(Transformer, null, [{
+    key: "fetch",
+    value:
+    /**
+     * Method used to transform a fetched data
+     *
+     * @param param
+     * @return {*}
+     */
+    function fetch(param) {
+      if (param && Array.isArray(param)) {
+        return Transformer.fetchCollection(param);
+      } else if (param && _typeof(param) === 'object') {
+        return Transformer.fetchObject(param);
+      }
+
+      return param;
+    }
+    /**
+     * Method used to transform a fetched collection
+     *
+     * @param param
+     * @return [Array]
+     */
+
+  }, {
+    key: "fetchCollection",
+    value: function fetchCollection(param) {
+      return param.map(function (item) {
+        return Transformer.fetch(item);
+      });
+    }
+    /**
+     * Method used to transform a fetched object
+     *
+     * @param param
+     * @return {{}}
+     */
+
+  }, {
+    key: "fetchObject",
+    value: function fetchObject(param) {
+      var data = {};
+
+      lodash__WEBPACK_IMPORTED_MODULE_0___default().forOwn(param, function (value, key) {
+        data[lodash__WEBPACK_IMPORTED_MODULE_0___default().camelCase(key)] = Transformer.fetch(value);
+      });
+
+      return data;
+    }
+    /**
+     * Method used to transform a send data
+     *
+     * @param param
+     * @return {*}
+     */
+
+  }, {
+    key: "send",
+    value: function send(param) {
+      if (param && Array.isArray(param)) {
+        return Transformer.sendCollection(param);
+      } else if (param && _typeof(param) === 'object') {
+        return Transformer.sendObject(param);
+      }
+
+      return param;
+    }
+    /**
+     * Method used to transform a collection to be send
+     *
+     * @param param
+     * @return [Array]
+     */
+
+  }, {
+    key: "sendCollection",
+    value: function sendCollection(param) {
+      return param.map(function (item) {
+        return Transformer.send(item);
+      });
+    }
+    /**
+     * Method used to transform a object to be send
+     *
+     * @param param
+     * @returns {{}}
+     */
+
+  }, {
+    key: "sendObject",
+    value: function sendObject(param) {
+      var data = {};
+
+      lodash__WEBPACK_IMPORTED_MODULE_0___default().forOwn(param, function (value, key) {
+        data[lodash__WEBPACK_IMPORTED_MODULE_0___default().snakeCase(key)] = Transformer.send(value);
+      });
+
+      return data;
+    }
+    /**
+     * Method used to transform a form errors
+     *
+     * @param errors The fetched data
+     * @param replace Boolean
+     * @param searchStr String
+     * @param replaceStr String
+     * @returns {{}}
+     */
+
+  }, {
+    key: "resetValidationFields",
+    value: function resetValidationFields(_ref) {
+      var errors = _ref.errors,
+          _ref$replace = _ref.replace,
+          replace = _ref$replace === void 0 ? false : _ref$replace,
+          _ref$searchStr = _ref.searchStr,
+          searchStr = _ref$searchStr === void 0 ? '' : _ref$searchStr,
+          _ref$replaceStr = _ref.replaceStr,
+          replaceStr = _ref$replaceStr === void 0 ? '' : _ref$replaceStr;
+      console.log(errors);
+      var data = {};
+
+      lodash__WEBPACK_IMPORTED_MODULE_0___default().forOwn(errors, function (value, key) {
+        var index = '';
+
+        if (replace) {
+          index = lodash__WEBPACK_IMPORTED_MODULE_0___default().camelCase(key.replace(searchStr, replaceStr));
+        } else {
+          index = lodash__WEBPACK_IMPORTED_MODULE_0___default().camelCase(key);
+        }
+
+        data[index] = lodash__WEBPACK_IMPORTED_MODULE_0___default().head(value);
+      });
+
+      return data;
+    }
+  }]);
+
+  return Transformer;
+}();
+
+
 
 /***/ }),
 

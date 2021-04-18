@@ -85,7 +85,20 @@
                                 @if(count($job->KnownLanguages) > 0)
                                 @foreach($job->KnownLanguages as $a)
 
-                                <p><strong>{{$a->language_name}}</strong><br/>{{$a->read ?'Read : Yes,':''}} {{$a->write ?'Write : Yes,':''}}  {{$a->speak ?'Speak : Yes':''}}</p>
+                                <p><strong>{{$a->language_name}}</strong><br/>Read:{{$a->read ?'Yes':'No'}}   &nbsp; Write:{{$a->write ?'Yes':'No'}} &nbsp; Speak: {{$a->speak ?'Yes':'No'}}</p>
+                                <hr/>
+                                @endforeach
+                                @endif
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Work Experience</td>
+                            <td>
+                                @if(count($job->WorkExperience) > 0)
+                                @foreach($job->WorkExperience as $a)
+                                <p><strong>Current Company : </strong>{{$a->company}}</p>
+                                <p><strong>Designation : </strong>{{$a->designation}}</p>
+                                <p><strong>From : </strong>{{$a->from_date}} - <strong>To : </strong>{{$a->to_date}}</p>
                                 <hr/>
                                 @endforeach
                                 @endif

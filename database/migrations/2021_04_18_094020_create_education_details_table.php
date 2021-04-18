@@ -22,7 +22,7 @@ class CreateEducationDetailsTable extends Migration
             $table->timestamps();
 
              //Foreign key references
-            $table->foreign('app_id')->references('id')->on('job_applications');
+            $table->foreign('app_id')->references('id')->on('job_applications')->onDelete('cascade');
         });
     }
 

@@ -8,4 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class KnownLanguages extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'app_id', 'language_name', 'read', 'write','speak'
+    ];
 }

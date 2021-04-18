@@ -6,8 +6,10 @@ import Form from "./components/Form";
 import Form2 from "./components/Form2";
 import Form3 from "./components/Form3";
 import Footer from "./components/Footer";
-
+import {submit_application} from './services';
 class AppMaster extends Component {
+
+
   constructor(props) {
     super(props);
     this.state = {
@@ -127,6 +129,112 @@ class AppMaster extends Component {
     this.handleExperience = this.handleExperience.bind(this);
     this.handleRemoveExp = this.handleRemoveExp.bind(this);
     this.handleAddMoreExp = this.handleAddMoreExp.bind(this);
+    this.resetStates = this.resetStates.bind(this);
+  }
+
+  //reset state object
+  resetStates(){
+      var d = {
+        fullName: "",
+        birthDate: new Date(),
+        email: "",
+        gender: "",
+        address: "",
+        houseNumber: "",
+        zipcode: "",
+        file: new FileReader(),
+        letter: "",
+        submitting: true,
+        formErrors: {
+          fullName: "",
+          birthDate: "",
+          email: "",
+          gender: "",
+          address: "",
+          houseNumber: "",
+          zipcode: "",
+          file: "ok",
+          letter: "ok",
+          preferred_location: "",
+          expected_ctc : "",
+          current_ctc:"",
+          notice_period : "",
+        },
+        isModalOpen: false,
+        work_experience : [
+            {
+                company:'',
+                designation:'',
+                from_date:'',
+                to_date:''
+            }
+        ],
+        education_details : [
+          {
+              education_board:'',
+              year:'',
+              percentage:''
+          }
+        ],
+        known_languages : [
+              {
+                  language_name : "english",
+                  is_selected : false,
+                  ability : {
+                      read : false,
+                      write : false,
+                      speak : false
+                  }
+              },
+              {
+                  language_name : "gujarati",
+                  is_selected : false,
+                  ability : {
+                      read : false,
+                      write : false,
+                      speak : false
+                  }
+              },
+              {
+                  language_name : "hindi",
+                  is_selected : false,
+                  ability : {
+                      read : false,
+                      write : false,
+                      speak : false
+                  }
+              }
+        ],
+        technical_expertise : [
+          {
+              technology_name : 'php',
+              is_selected : false,
+              technology_value:''
+          },
+          {
+              technology_name : 'mysql',
+              is_selected : false,
+              technology_value:''
+          },
+          {
+              technology_name : 'laravel',
+              is_selected : false,
+              technology_value:''
+          },
+          {
+              technology_name : 'reactjs',
+              is_selected : false,
+              technology_value:''
+          }
+        ],
+        preferred_location : '',
+        expected_ctc : '',
+        current_ctc:'',
+        notice_period : '',
+        show: "",
+        formSteps:0,
+      }
+      this.setState(d);
   }
 
   handleDate(date) {
@@ -239,8 +347,6 @@ class AppMaster extends Component {
     e.preventDefault();
     const { name, value } = e.target;
     let formErrors = this.state.formErrors;
-    console.log("name: ", name);
-    console.log("value : ", value);
 
     switch (name) {
       case "fullName":
@@ -370,6 +476,7 @@ class AppMaster extends Component {
       this.state.formErrors.file === "ok" &&
       this.state.formErrors.letter === "ok"
     ) {
+      this.final_submission(this.state)
       Swal.fire(
         "Thanks for submitting!",
         "We will contact you soon!",
@@ -397,6 +504,15 @@ class AppMaster extends Component {
     }else{
         return true;
     }
+  }
+
+  final_submission(d){
+        submit_application(d)
+        .then(response => {
+
+                this.handleFormSteps(0);
+                this.resetStates();
+        });
   }
   /**Form error handling */
   stepSecondFormError(){
@@ -487,5 +603,7 @@ class AppMaster extends Component {
     );
   }
 }
+
+
 
 export default AppMaster;

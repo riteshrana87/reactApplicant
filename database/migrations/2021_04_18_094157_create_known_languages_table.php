@@ -17,13 +17,13 @@ class CreateKnownLanguagesTable extends Migration
             $table->id();
             $table->unsignedBigInteger('app_id');
             $table->string('language_name',100);
-            $table->integer('read');
-            $table->integer('write');
-            $table->integer('speak');
+            $table->integer('read')->nullable();
+            $table->integer('write')->nullable();
+            $table->integer('speak')->nullable();
             $table->timestamps();
 
              //Foreign key references
-            $table->foreign('app_id')->references('id')->on('job_applications');
+            $table->foreign('app_id')->references('id')->on('job_applications')->onDelete('cascade');
         });
     }
 

@@ -222,7 +222,7 @@ class Form3 extends Component {
             </h3>
             <div className="form-group">
               <div className="row">
-                  <select onChange={onChange} className="form-field" name="preferred_location">
+                  <select onChange={onChange} value={state.preferred_location} className="form-field" name="preferred_location">
                       <option value=''>---Preferred Location---</option>
                       <option value='Ahmedabad'>Ahmedabad</option>
                       <option value='Mumbai'>Mumbai</option>
