@@ -59,10 +59,10 @@
                                                         {!! Form::Close() !!}
                                                     </div>
                                                     <div class="col-sm-2">
-                                                        <a href="/app-forms/{{$application->id}}/edit" class="btn btn-primary"><i class="fa fa-pencil"></i></a>
+                                                        <a href="{{url('app-forms/'.$application->id.'/edit')}}" class="btn btn-primary"><i class="fa fa-pencil"></i></a>
                                                     </div>
                                                     <div class="col-sm-2">
-                                                        <a href="/app-forms/{{$application->id}}" class="btn btn-primary"><i class="fa fa-eye"></i></a>
+                                                        <a href="{{url('app-forms/'.$application->id)}}" class="btn btn-primary"><i class="fa fa-eye"></i></a>
                                                     </div>
                                                 </div>
                                             </td>
