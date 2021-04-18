@@ -19,3 +19,9 @@ then open url > http://127.0.0.1:8000
 
 
 Frontend will be developed in reactjs and backend in Laravel 8.12
+
+Admin Login:
+admin@example.com
+Dev@123
+
+Demo URL :  http://ec2-54-162-251-185.compute-1.amazonaws.com/reactApplicant/
