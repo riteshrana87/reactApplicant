@@ -37,7 +37,21 @@ class AppMaster extends Component {
         notice_period : "",
       },
       isModalOpen: false,
-      work_experiance : [],
+      work_experience : [
+          {
+              company:'',
+              designation:'',
+              from_date:'',
+              to_date:''
+          }
+      ],
+      education_details : [
+        {
+            education_board:'',
+            year:'',
+            percentage:''
+        }
+      ],
       known_languages : [
             {
                 language_name : "english",
@@ -94,9 +108,10 @@ class AppMaster extends Component {
       current_ctc:'',
       notice_period : '',
       show: "",
-      formSteps:0
+      formSteps:1
     };
 
+    //bind functions
     this.handleChange = this.handleChange.bind(this);
     this.handleChangeLanguage = this.handleChangeLanguage.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -104,6 +119,13 @@ class AppMaster extends Component {
     this.handleFormSteps = this.handleFormSteps.bind(this);
     this.handleAbilityLang = this.handleAbilityLang.bind(this);
     this.onTechnicalChange = this.onTechnicalChange.bind(this);
+    this.stepZeroFormError = this.stepZeroFormError.bind(this);
+    this.handleEducationBoard = this.handleEducationBoard.bind(this);
+    this.handleAddMoreEducation = this.handleAddMoreEducation.bind(this);
+    this.handleRemoveEducation = this.handleRemoveEducation.bind(this);
+    this.handleExperience = this.handleExperience.bind(this);
+    this.handleRemoveExp = this.handleRemoveExp.bind(this);
+    this.handleAddMoreExp = this.handleAddMoreExp.bind(this);
   }
 
   handleDate(date) {
@@ -113,6 +135,66 @@ class AppMaster extends Component {
   }
   handleFormSteps(v){
       this.setState({formSteps:v});
+  }
+
+  /**Update education state */
+  handleEducationBoard(name,value,i){
+    const{education_details} = this.state;
+    var e = education_details;
+    e[i][name] = value;
+    this.setState({education_details:e});
+  }
+
+  /**Update exp state */
+  handleExperience(name,value,i){
+    const{work_experience} = this.state;
+    var e = work_experience;
+    e[i][name] = value;
+    this.setState({work_experience:e});
+  }
+
+  /**Add More Education state */
+  handleAddMoreEducation(){
+    const{education_details} = this.state;
+    var e = education_details;
+    let add_more = {
+        education_board:'',
+        year:'',
+        percentage:''
+    }
+    if(e && e.length < 10){
+        e.push(add_more)
+    }
+    this.setState({education_details:e});
+  }
+  /**Add more Experience state */
+  handleAddMoreExp(){
+    const{work_experience} = this.state;
+    var e = work_experience;
+    let add_more = {
+        company:'',
+        designation:'',
+        from_date:'',
+        to_date:''
+    }
+    e.push(add_more)
+    this.setState({work_experience:e});
+  }
+
+  /**Handler for remove education */
+  handleRemoveEducation(index){
+    const{education_details} = this.state;
+    var e = education_details;
+    e.splice(index,1)
+    this.setState({education_details:e});
+  }
+
+  /**Handler for remove experience */
+  handleRemoveExp(index){
+    const{work_experience} = this.state;
+    var e = work_experience;
+    e.splice(index,1)
+    this.setState({work_experience:e});
   }
 
   handleChangeLanguage(name,value,i){
@@ -283,6 +365,20 @@ class AppMaster extends Component {
     }
   }
 
+  stepZeroFormError(){
+    if(this.state.formErrors.fullName === "Perfect!" &&
+    this.state.formErrors.birthDate === "" &&
+    this.state.formErrors.email === "Perfect!" &&
+    this.state.formErrors.gender === "Perfect!" &&
+    this.state.formErrors.address === "Perfect!" &&
+    this.state.formErrors.houseNumber === "Perfect!" &&
+    this.state.formErrors.zipcode === "Perfect!"){
+        return false;
+    }else{
+        return true;
+    }
+  }
+
   onFormChangeSteps(){
       const {formSteps} = this.state;
       if(formSteps === 0){
@@ -290,6 +386,7 @@ class AppMaster extends Component {
             <Form
               state={this.state}
               onChange={this.handleChange}
+              onError={this.stepZeroFormError}
               handleFormSteps={this.handleFormSteps}
               onSubmit={this.handleSubmit}
               onHandleDate={this.handleDate}
@@ -300,6 +397,12 @@ class AppMaster extends Component {
             <Form2
               state={this.state}
               onChange={this.handleChange}
+              handleAddMoreEducation={this.handleAddMoreEducation}
+              handleExperience={this.handleExperience}
+              handleAddMoreExp={this.handleAddMoreExp}
+              handleRemoveExp={this.handleRemoveExp}
+              handleEducationBoard={this.handleEducationBoard}
+              handleRemoveEducation={this.handleRemoveEducation}
               onSubmit={this.handleSubmit}
               handleFormSteps={this.handleFormSteps}
               onHandleDate={this.handleDate}

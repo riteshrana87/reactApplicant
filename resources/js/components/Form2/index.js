@@ -3,194 +3,199 @@ import "./Form.scss";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 class Form2 extends Component {
-  renderLanguages(languages) {
-    const { onLanguageChange } = this.props;
-    if (languages && languages.length > 0) {
-      return languages.map((d, i) => {
-        const { language_name, ability, is_selected } = d;
+    renderEducation(education) {
+    const { handleEducationBoard,handleRemoveEducation } = this.props;
+    if (education && education.length > 0) {
+      return education.map((d, i) => {
+        const { education_board,
+        year,
+        percentage } = d;
         return (
           <div key={i} className="row">
             <div className="col-md-3">
-              <label htmlFor={language_name}>{language_name}</label>
               <input
-                id={language_name}
-                name={language_name}
-                className=""
-                type="checkbox"
-                defaultChecked={is_selected}
+                name='education_board'
+                placeholder="Board/University"
+                value={education_board}
+                className="form-control"
+                type="text"
                 onChange={(e) =>
-                  onLanguageChange(e.target.name, e.target.checked, i)
+                    handleEducationBoard(e.target.name, e.target.value, i)
                 }
                 required
               />
             </div>
-            {this.readWriteSyntax(language_name, ability, is_selected, i)}
+            <div className="col-md-3">
+              <input
+                name='year'
+                placeholder="Year eg. 2020"
+                className="form-control"
+                maxLength={4}
+                value={year}
+                type="text"
+                onChange={(e) =>
+                    handleEducationBoard(e.target.name, e.target.value, i)
+                }
+                required
+              />
+            </div>
+            <div className="col-md-3">
+              <input
+                name='percentage'
+                value={percentage}
+                placeholder="CGPA/Percentage"
+                className="form-control"
+                type="text"
+                onChange={(e) =>
+                    handleEducationBoard(e.target.name, e.target.value, i)
+                }
+                required
+              />
+
+
+            </div>
+            <div className="col-md-1">
+                {
+                        i != 0 ?
+                        <button type="button" onClick={() => handleRemoveEducation(i)} className="btn btn-danger"><strong>-</strong></button>:''
+                    }
+            </div>
           </div>
         );
       });
     } else return false;
   }
-  readWriteSyntax(language = "", ability, is_selected, i) {
-    const { handleAbilityLang } = this.props;
-    const { read, write, speak } = ability;
-    var msg =  false;
-    if(!read && !write && !speak && is_selected){
-        msg = true;
-    }
-    return (
-      <div className="col-md-6">
-          {
-          msg ?
-          <span style={{color:'red'}}>Please select at least one.</span>:''
-          }
 
-        <div className="row">
-          <div className="col-sm-2">
-            <label>Read&nbsp;</label>
-            <input
-              className=""
-              type="checkbox"
-              name="read"
-              value={read}
-              checked={read}
-              onChange={(e) =>
-                handleAbilityLang(e.target.name, e.target.checked, i)
-              }
-              disabled={!is_selected}
-              required
-            />
-          </div>
-          <div className="col-sm-2">
-            <label>Write&nbsp;</label>
-            <input
-              className=""
-              type="checkbox"
-              name="write"
-              value={write}
-              checked={write}
-              onChange={(e) =>
-                handleAbilityLang(e.target.name, e.target.checked, i)
-              }
-              disabled={!is_selected}
-              required
-            />
-          </div>
-          <div className="col-sm-2">
-            <label>Speak&nbsp;</label>
-            <input
-              className=""
-              type="checkbox"
-              name="speak"
-              value={speak}
-              checked={speak}
-              onChange={(e) =>
-                handleAbilityLang(e.target.name, e.target.checked, i)
-              }
-              disabled={!is_selected}
-              required
-            />
-          </div>
-        </div>
-        <hr />
-      </div>
-    );
-  }
-  techNoSyntax(language = "", is_selected, i, n) {
-    const { onTechnicalChange } = this.props;
-    var msg =  false;
-    if(language == '' && is_selected){
-        msg = true;
-    }
-    return (
-      <div className="col-md-6">
-           {
-          msg ?
-          <span style={{color:'red'}}>Please choose.</span>:''
-          }
-        <div className="row">
-          <div className="col-sm-3">
-            <label>beginner&nbsp;</label>
-            <input
-              className=""
-              type="radio"
-              name={"technology_value_" + n}
-              value={"beginner"}
-              checked={language == "beginner" ? true : false}
-              onChange={(e) =>
-                onTechnicalChange("technology_value", e.target.value, i)
-              }
-              disabled={!is_selected}
-              required
-            />
-          </div>
-          <div className="col-sm-3">
-            <label>Mediator&nbsp;</label>
-            <input
-              className=""
-              type="radio"
-              name={"technology_value_" + n}
-              value={"Mediator"}
-              checked={language == "Mediator" ? true : false}
-              onChange={(e) =>
-                onTechnicalChange("technology_value", e.target.value, i)
-              }
-              disabled={!is_selected}
-              required
-            />
-          </div>
-          <div className="col-sm-3">
-            <label>Expert&nbsp;</label>
-            <input
-              className=""
-              type="radio"
-              name={"technology_value_" + n}
-              value={"Expert"}
-              checked={language == "Expert" ? true : false}
-              onChange={(e) =>
-                onTechnicalChange("technology_value", e.target.value, i)
-              }
-              disabled={!is_selected}
-              required
-            />
-          </div>
-        </div>
-        <hr />
-      </div>
-    );
-  }
-
-  renderTechnicalExperience(expertise) {
-    const { onTechnicalChange } = this.props;
-    if (expertise && expertise.length > 0) {
-      return expertise.map((d, i) => {
-        const { technology_name, technology_value, ability, is_selected } = d;
+  renderWorkExp(exp){
+    const { handleExperience,handleRemoveExp } = this.props;
+    if (exp && exp.length > 0) {
+      return exp.map((d, i) => {
+        const {   company,
+        designation,
+        from_date,
+        to_date } = d;
         return (
-          <div key={i} className="row">
-            <div className="col-md-3">
-              <label htmlFor={technology_name}>{technology_name}</label>
+        <div key={i}>
+            <div className="row">
+            <span><strong>History </strong>: {i+1} </span>
+            <div className="col-md-1">
+                {
+                        i != 0 ?
+                        <button type="button" onClick={() => handleRemoveExp(i)} className="btn btn-danger"><strong>-</strong></button>:''
+                    }
+            </div>
+            </div>
+          <div  className="row">
+
+            <div className="col-md-5">
+            <label className="form-label">
+                  Company<span className="form-asterisk"> *</span>
+                </label>
               <input
-                id={technology_name}
-                name={technology_name}
-                className=""
-                type="checkbox"
-                defaultChecked={is_selected}
+                name='company'
+                placeholder="eg. Google Inc."
+                value={company}
+                maxLength={25}
+                className="form-control"
+                type="text"
                 onChange={(e) =>
-                  onTechnicalChange(e.target.name, e.target.checked, i, true)
+                    handleExperience(e.target.name, e.target.value, i)
                 }
                 required
               />
             </div>
-            {this.techNoSyntax(
-              technology_value,
-              is_selected,
-              i,
-              technology_name
-            )}
+            <div className="col-md-5">
+            <label className="form-label">
+                  Designation<span className="form-asterisk"> *</span>
+                </label>
+              <input
+                name='designation'
+                placeholder="eg. Sr React Developer"
+                className="form-control"
+                maxLength={20}
+                value={designation}
+                type="text"
+                onChange={(e) =>
+                    handleExperience(e.target.name, e.target.value, i)
+                }
+                required
+              />
+            </div>
+
+
+          </div>
+          <div className="row">
+               <div className="col-md-5">
+
+                <label className="form-label">
+                  From<span className="form-asterisk"> *</span>
+                </label>
+                <DatePicker
+                    className="form-control"
+                    name="from_date"
+                    selected={from_date}
+                    onChange={(e) => handleExperience('from_date',e,i)}
+                    value={from_date}
+                    peekNextMonth
+                    showMonthDropdown
+                    showYearDropdown
+                    dropdownMode="select"
+                    placeholder="dd/mm/yyyy"
+                    required
+                    />
+                </div>
+
+            <div className="col-md-5">
+
+                <label className="form-label">
+                  TO<span className="form-asterisk"> *</span>
+                </label>
+                <DatePicker
+                    className="form-control"
+                    name="to_date"
+                    selected={to_date}
+                    onChange={(e) => handleExperience('to_date',e,i)}
+                    value={to_date}
+                    peekNextMonth
+                    showMonthDropdown
+                    showYearDropdown
+                    dropdownMode="select"
+                    placeholder="dd/mm/yyyy"
+                    required
+                    />
+                </div>
+
+          </div>
+          <hr/>
           </div>
         );
       });
     } else return false;
   }
+
+  /**Form error handling */
+  isError(){
+    const{state} = this.props;
+    var isError = false;
+    if(state){
+        if(state.work_experience && state.work_experience.length > 0){
+            state.work_experience.map((d,i) => {
+                if(d.company == '' || d.designation == '' || d.from_date == '' || d.to_date == ''){
+                    isError = true;
+                }
+            })
+        }
+        if(state.education_details && state.education_details.length > 0){
+            state.education_details.map((d,i) => {
+                if(d.year == '' || d.education_board == '' || d.percentage == ''){
+                    isError = true;
+                }
+            })
+        }
+    }
+    return isError;
+  }
+
   render() {
     const {
       onChange,
@@ -199,23 +204,51 @@ class Form2 extends Component {
       onHandleDate,
       state,
       handleFormSteps,
+      handleAddMoreEducation,
+      handleAddMoreExp,
     } = this.props;
     return (
           <form onSubmit={onSubmit} className="form" noValidate>
             {/* name */}
-            <h3 className="text-left">
-            Education details
-            </h3>
             <div className="form-group">
-              {this.renderLanguages(state.known_languages)}
-              <div className="form-message">{state.formErrors.fullName}</div>
+            <div className="row">
+            <div className="col-md-10">
+            <h3 className="text-left">
+                Education details <small>(SSC, HSC,Graduation, Master Degree)</small>
+            </h3>
             </div>
-            <h3 className="text-left">
-            Work Experience
-            </h3>
+            <div className="col-md-2">
+                <button type="button" onClick={() => handleAddMoreEducation()} className="form-item btn btn-success">Add More</button>
+            </div>
+
+            </div>
+            </div>
+
             <div className="form-group">
-              {this.renderTechnicalExperience(state.technical_expertise)}
-              <div className="form-message">{state.formErrors.fullName}</div>
+                {
+                    state.education_details && state.education_details.length > 4 ?
+                    <span>Max 10 records allowed.</span>:''
+                }
+              {this.renderEducation(state.education_details)}
+            </div>
+            <hr/>
+            <div className="row">
+
+                <div className="col-md-4">
+                    <h3 className="text-left">
+                    Work Experience
+                    </h3>
+                </div>
+
+                <div className="col-md-3"></div>
+                <div className="col-md-2">
+                    <button type="button" onClick={() => handleAddMoreExp()} className="form-item btn btn-success">Add More</button>
+                </div>
+
+            </div>
+
+            <div className="form-group">
+                {this.renderWorkExp(state.work_experience)}
             </div>
 
 
@@ -237,6 +270,7 @@ class Form2 extends Component {
                             className="form-item form-submit-button"
                             type="button"
                             onClick={(e) => onSubmit(e,2)}
+                            disabled={this.isError()}
                         >
                             Next Step
                         </button>

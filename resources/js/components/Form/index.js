@@ -4,7 +4,8 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 class Form extends Component {
   render() {
-    const { onChange, onSubmit, onHandleDate, state } = this.props;
+    const { onChange, onSubmit, onHandleDate, state, onError } = this.props;
+
     return (
 
 
@@ -19,6 +20,7 @@ class Form extends Component {
                 className="form-field"
                 type="text"
                 name="fullName"
+                maxLength={50}
                 value={state.fullName}
                 onChange={onChange}
                 placeholder="Vishal Mistry"
@@ -35,6 +37,7 @@ class Form extends Component {
                 className="form-field"
                 name="email"
                 type="email"
+                maxLength={50}
                 value={state.email}
                 onChange={onChange}
                 placeholder="email@example.com"
@@ -65,7 +68,7 @@ class Form extends Component {
                   className="form-field"
                   name="birthDate"
                   value={state.birthDate}
-                  placeholder="dd/mm/yyyy"
+                  placeholder="dd/mm/yyyy"gender
                   required
                 /> */}
                 <div className="form-message">{state.formErrors.birthDate}</div>
@@ -80,13 +83,13 @@ class Form extends Component {
                 <select
                   className="form-field"
                   name="gender"
-                  value={state.value}
+                  value={state.gender}
                   onChange={onChange}
                   required
                 >
-                  <option>Choose your gender</option>
-                  <option>Female</option>
-                  <option>Male</option>
+                  <option value=''>Choose your gender</option>
+                  <option value='Female'>Female</option>
+                  <option value='Male'>Male</option>
                 </select>
                 <div className="form-message">{state.formErrors.gender}</div>
               </div>
@@ -99,6 +102,7 @@ class Form extends Component {
               <input
                 className="form-field"
                 name="address"
+                maxLength={100}
                 type="text"
                 value={state.address}
                 onChange={onChange}
@@ -114,6 +118,7 @@ class Form extends Component {
                     className="form-field"
                     name="houseNumber"
                     type="text"
+                    maxLength={5}
                     value={state.houseNumber}
                     onChange={onChange}
                     placeholder="House number"
@@ -131,6 +136,7 @@ class Form extends Component {
                     name="zipcode"
                     type="text"
                     value={state.zipcode}
+                    maxLength={6}
                     onChange={onChange}
                     placeholder="Zipcode"
                     required
@@ -156,6 +162,7 @@ class Form extends Component {
               <button
                 className="form-item form-submit-button"
                 type="button"
+                disabled={onError()}
                 onClick={(e) => onSubmit(e,1)}
               >
                 Next Step

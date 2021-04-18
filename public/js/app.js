@@ -2311,7 +2311,17 @@ var AppMaster = /*#__PURE__*/function (_Component) {
         notice_period: ""
       },
       isModalOpen: false,
-      work_experiance: [],
+      work_experience: [{
+        company: '',
+        designation: '',
+        from_date: '',
+        to_date: ''
+      }],
+      education_details: [{
+        education_board: '',
+        year: '',
+        percentage: ''
+      }],
       known_languages: [{
         language_name: "english",
         is_selected: false,
@@ -2359,8 +2369,9 @@ var AppMaster = /*#__PURE__*/function (_Component) {
       current_ctc: '',
       notice_period: '',
       show: "",
-      formSteps: 0
-    };
+      formSteps: 1
+    }; //bind functions
+
     _this.handleChange = _this.handleChange.bind(_assertThisInitialized(_this));
     _this.handleChangeLanguage = _this.handleChangeLanguage.bind(_assertThisInitialized(_this));
     _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
@@ -2368,6 +2379,13 @@ var AppMaster = /*#__PURE__*/function (_Component) {
     _this.handleFormSteps = _this.handleFormSteps.bind(_assertThisInitialized(_this));
     _this.handleAbilityLang = _this.handleAbilityLang.bind(_assertThisInitialized(_this));
     _this.onTechnicalChange = _this.onTechnicalChange.bind(_assertThisInitialized(_this));
+    _this.stepZeroFormError = _this.stepZeroFormError.bind(_assertThisInitialized(_this));
+    _this.handleEducationBoard = _this.handleEducationBoard.bind(_assertThisInitialized(_this));
+    _this.handleAddMoreEducation = _this.handleAddMoreEducation.bind(_assertThisInitialized(_this));
+    _this.handleRemoveEducation = _this.handleRemoveEducation.bind(_assertThisInitialized(_this));
+    _this.handleExperience = _this.handleExperience.bind(_assertThisInitialized(_this));
+    _this.handleRemoveExp = _this.handleRemoveExp.bind(_assertThisInitialized(_this));
+    _this.handleAddMoreExp = _this.handleAddMoreExp.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -2383,6 +2401,93 @@ var AppMaster = /*#__PURE__*/function (_Component) {
     value: function handleFormSteps(v) {
       this.setState({
         formSteps: v
+      });
+    }
+    /**Update education state */
+
+  }, {
+    key: "handleEducationBoard",
+    value: function handleEducationBoard(name, value, i) {
+      var education_details = this.state.education_details;
+      var e = education_details;
+      e[i][name] = value;
+      this.setState({
+        education_details: e
+      });
+    }
+    /**Update exp state */
+
+  }, {
+    key: "handleExperience",
+    value: function handleExperience(name, value, i) {
+      var work_experience = this.state.work_experience;
+      var e = work_experience;
+      e[i][name] = value;
+      this.setState({
+        work_experience: e
+      });
+    }
+    /**Add More Education state */
+
+  }, {
+    key: "handleAddMoreEducation",
+    value: function handleAddMoreEducation() {
+      var education_details = this.state.education_details;
+      var e = education_details;
+      var add_more = {
+        education_board: '',
+        year: '',
+        percentage: ''
+      };
+
+      if (e && e.length < 10) {
+        e.push(add_more);
+      }
+
+      this.setState({
+        education_details: e
+      });
+    }
+    /**Add more Experience state */
+
+  }, {
+    key: "handleAddMoreExp",
+    value: function handleAddMoreExp() {
+      var work_experience = this.state.work_experience;
+      var e = work_experience;
+      var add_more = {
+        company: '',
+        designation: '',
+        from_date: '',
+        to_date: ''
+      };
+      e.push(add_more);
+      this.setState({
+        work_experience: e
+      });
+    }
+    /**Handler for remove education */
+
+  }, {
+    key: "handleRemoveEducation",
+    value: function handleRemoveEducation(index) {
+      var education_details = this.state.education_details;
+      var e = education_details;
+      e.splice(index, 1);
+      this.setState({
+        education_details: e
+      });
+    }
+    /**Handler for remove experience */
+
+  }, {
+    key: "handleRemoveExp",
+    value: function handleRemoveExp(index) {
+      var work_experience = this.state.work_experience;
+      var e = work_experience;
+      e.splice(index, 1);
+      this.setState({
+        work_experience: e
       });
     }
   }, {
@@ -2524,6 +2629,15 @@ var AppMaster = /*#__PURE__*/function (_Component) {
       }
     }
   }, {
+    key: "stepZeroFormError",
+    value: function stepZeroFormError() {
+      if (this.state.formErrors.fullName === "Perfect!" && this.state.formErrors.birthDate === "" && this.state.formErrors.email === "Perfect!" && this.state.formErrors.gender === "Perfect!" && this.state.formErrors.address === "Perfect!" && this.state.formErrors.houseNumber === "Perfect!" && this.state.formErrors.zipcode === "Perfect!") {
+        return false;
+      } else {
+        return true;
+      }
+    }
+  }, {
     key: "onFormChangeSteps",
     value: function onFormChangeSteps() {
       var formSteps = this.state.formSteps;
@@ -2532,6 +2646,7 @@ var AppMaster = /*#__PURE__*/function (_Component) {
         return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_components_Form__WEBPACK_IMPORTED_MODULE_4__.default, {
           state: this.state,
           onChange: this.handleChange,
+          onError: this.stepZeroFormError,
           handleFormSteps: this.handleFormSteps,
           onSubmit: this.handleSubmit,
           onHandleDate: this.handleDate
@@ -2540,6 +2655,12 @@ var AppMaster = /*#__PURE__*/function (_Component) {
         return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_components_Form2__WEBPACK_IMPORTED_MODULE_5__.default, {
           state: this.state,
           onChange: this.handleChange,
+          handleAddMoreEducation: this.handleAddMoreEducation,
+          handleExperience: this.handleExperience,
+          handleAddMoreExp: this.handleAddMoreExp,
+          handleRemoveExp: this.handleRemoveExp,
+          handleEducationBoard: this.handleEducationBoard,
+          handleRemoveEducation: this.handleRemoveEducation,
           onSubmit: this.handleSubmit,
           handleFormSteps: this.handleFormSteps,
           onHandleDate: this.handleDate
@@ -2900,7 +3021,8 @@ var Form = /*#__PURE__*/function (_Component) {
           onChange = _this$props.onChange,
           onSubmit = _this$props.onSubmit,
           onHandleDate = _this$props.onHandleDate,
-          state = _this$props.state;
+          state = _this$props.state,
+          onError = _this$props.onError;
       return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("form", {
         onSubmit: onSubmit,
         className: "form",
@@ -2922,6 +3044,7 @@ var Form = /*#__PURE__*/function (_Component) {
             className: "form-field",
             type: "text",
             name: "fullName",
+            maxLength: 50,
             value: state.fullName,
             onChange: onChange,
             placeholder: "Vishal Mistry",
@@ -2942,6 +3065,7 @@ var Form = /*#__PURE__*/function (_Component) {
             className: "form-field",
             name: "email",
             type: "email",
+            maxLength: 50,
             value: state.email,
             onChange: onChange,
             placeholder: "email@example.com",
@@ -2987,14 +3111,17 @@ var Form = /*#__PURE__*/function (_Component) {
             }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("select", {
               className: "form-field",
               name: "gender",
-              value: state.value,
+              value: state.gender,
               onChange: onChange,
               required: true,
               children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("option", {
+                value: "",
                 children: "Choose your gender"
               }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("option", {
+                value: "Female",
                 children: "Female"
               }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("option", {
+                value: "Male",
                 children: "Male"
               })]
             }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
@@ -3013,6 +3140,7 @@ var Form = /*#__PURE__*/function (_Component) {
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("input", {
             className: "form-field",
             name: "address",
+            maxLength: 100,
             type: "text",
             value: state.address,
             onChange: onChange,
@@ -3029,6 +3157,7 @@ var Form = /*#__PURE__*/function (_Component) {
                 className: "form-field",
                 name: "houseNumber",
                 type: "text",
+                maxLength: 5,
                 value: state.houseNumber,
                 onChange: onChange,
                 placeholder: "House number",
@@ -3044,6 +3173,7 @@ var Form = /*#__PURE__*/function (_Component) {
                 name: "zipcode",
                 type: "text",
                 value: state.zipcode,
+                maxLength: 6,
                 onChange: onChange,
                 placeholder: "Zipcode",
                 required: true
@@ -3058,6 +3188,7 @@ var Form = /*#__PURE__*/function (_Component) {
           children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("button", {
             className: "form-item form-submit-button",
             type: "button",
+            disabled: onError(),
             onClick: function onClick(e) {
               return onSubmit(e, 1);
             },
@@ -3088,6 +3219,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var _Form_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Form.scss */ "./resources/js/components/Form2/Form.scss");
+/* harmony import */ var react_datepicker__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-datepicker */ "./node_modules/react-datepicker/dist/react-datepicker.min.js");
+/* harmony import */ var react_datepicker__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(react_datepicker__WEBPACK_IMPORTED_MODULE_4__);
 /* harmony import */ var react_datepicker_dist_react_datepicker_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-datepicker/dist/react-datepicker.css */ "./node_modules/react-datepicker/dist/react-datepicker.css");
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -3131,261 +3264,303 @@ var Form2 = /*#__PURE__*/function (_Component) {
   }
 
   _createClass(Form2, [{
-    key: "renderLanguages",
-    value: function renderLanguages(languages) {
-      var _this = this;
+    key: "renderEducation",
+    value: function renderEducation(education) {
+      var _this$props = this.props,
+          handleEducationBoard = _this$props.handleEducationBoard,
+          handleRemoveEducation = _this$props.handleRemoveEducation;
 
-      var onLanguageChange = this.props.onLanguageChange;
-
-      if (languages && languages.length > 0) {
-        return languages.map(function (d, i) {
-          var language_name = d.language_name,
-              ability = d.ability,
-              is_selected = d.is_selected;
+      if (education && education.length > 0) {
+        return education.map(function (d, i) {
+          var education_board = d.education_board,
+              year = d.year,
+              percentage = d.percentage;
           return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
             className: "row",
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
               className: "col-md-3",
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("label", {
-                htmlFor: language_name,
-                children: language_name
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("input", {
-                id: language_name,
-                name: language_name,
-                className: "",
-                type: "checkbox",
-                defaultChecked: is_selected,
+              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("input", {
+                name: "education_board",
+                placeholder: "Board/University",
+                value: education_board,
+                className: "form-control",
+                type: "text",
                 onChange: function onChange(e) {
-                  return onLanguageChange(e.target.name, e.target.checked, i);
+                  return handleEducationBoard(e.target.name, e.target.value, i);
                 },
                 required: true
-              })]
-            }), _this.readWriteSyntax(language_name, ability, is_selected, i)]
+              })
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
+              className: "col-md-3",
+              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("input", {
+                name: "year",
+                placeholder: "Year eg. 2020",
+                className: "form-control",
+                maxLength: 4,
+                value: year,
+                type: "text",
+                onChange: function onChange(e) {
+                  return handleEducationBoard(e.target.name, e.target.value, i);
+                },
+                required: true
+              })
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
+              className: "col-md-3",
+              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("input", {
+                name: "percentage",
+                value: percentage,
+                placeholder: "CGPA/Percentage",
+                className: "form-control",
+                type: "text",
+                onChange: function onChange(e) {
+                  return handleEducationBoard(e.target.name, e.target.value, i);
+                },
+                required: true
+              })
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
+              className: "col-md-1",
+              children: i != 0 ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("button", {
+                type: "button",
+                onClick: function onClick() {
+                  return handleRemoveEducation(i);
+                },
+                className: "btn btn-danger",
+                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("strong", {
+                  children: "-"
+                })
+              }) : ''
+            })]
           }, i);
         });
       } else return false;
     }
   }, {
-    key: "readWriteSyntax",
-    value: function readWriteSyntax() {
-      var language = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "";
-      var ability = arguments.length > 1 ? arguments[1] : undefined;
-      var is_selected = arguments.length > 2 ? arguments[2] : undefined;
-      var i = arguments.length > 3 ? arguments[3] : undefined;
-      var handleAbilityLang = this.props.handleAbilityLang;
-      var read = ability.read,
-          write = ability.write,
-          speak = ability.speak;
-      var msg = false;
+    key: "renderWorkExp",
+    value: function renderWorkExp(exp) {
+      var _this$props2 = this.props,
+          handleExperience = _this$props2.handleExperience,
+          handleRemoveExp = _this$props2.handleRemoveExp;
 
-      if (!read && !write && !speak && is_selected) {
-        msg = true;
-      }
-
-      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
-        className: "col-md-6",
-        children: [msg ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("span", {
-          style: {
-            color: 'red'
-          },
-          children: "Please select at least one."
-        }) : '', /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
-          className: "row",
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
-            className: "col-sm-2",
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("label", {
-              children: "Read\xA0"
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("input", {
-              className: "",
-              type: "checkbox",
-              name: "read",
-              value: read,
-              checked: read,
-              onChange: function onChange(e) {
-                return handleAbilityLang(e.target.name, e.target.checked, i);
-              },
-              disabled: !is_selected,
-              required: true
-            })]
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
-            className: "col-sm-2",
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("label", {
-              children: "Write\xA0"
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("input", {
-              className: "",
-              type: "checkbox",
-              name: "write",
-              value: write,
-              checked: write,
-              onChange: function onChange(e) {
-                return handleAbilityLang(e.target.name, e.target.checked, i);
-              },
-              disabled: !is_selected,
-              required: true
-            })]
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
-            className: "col-sm-2",
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("label", {
-              children: "Speak\xA0"
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("input", {
-              className: "",
-              type: "checkbox",
-              name: "speak",
-              value: speak,
-              checked: speak,
-              onChange: function onChange(e) {
-                return handleAbilityLang(e.target.name, e.target.checked, i);
-              },
-              disabled: !is_selected,
-              required: true
-            })]
-          })]
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("hr", {})]
-      });
-    }
-  }, {
-    key: "techNoSyntax",
-    value: function techNoSyntax() {
-      var language = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "";
-      var is_selected = arguments.length > 1 ? arguments[1] : undefined;
-      var i = arguments.length > 2 ? arguments[2] : undefined;
-      var n = arguments.length > 3 ? arguments[3] : undefined;
-      var onTechnicalChange = this.props.onTechnicalChange;
-      var msg = false;
-
-      if (language == '' && is_selected) {
-        msg = true;
-      }
-
-      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
-        className: "col-md-6",
-        children: [msg ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("span", {
-          style: {
-            color: 'red'
-          },
-          children: "Please choose."
-        }) : '', /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
-          className: "row",
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
-            className: "col-sm-3",
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("label", {
-              children: "beginner\xA0"
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("input", {
-              className: "",
-              type: "radio",
-              name: "technology_value_" + n,
-              value: "beginner",
-              checked: language == "beginner" ? true : false,
-              onChange: function onChange(e) {
-                return onTechnicalChange("technology_value", e.target.value, i);
-              },
-              disabled: !is_selected,
-              required: true
-            })]
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
-            className: "col-sm-3",
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("label", {
-              children: "Mediator\xA0"
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("input", {
-              className: "",
-              type: "radio",
-              name: "technology_value_" + n,
-              value: "Mediator",
-              checked: language == "Mediator" ? true : false,
-              onChange: function onChange(e) {
-                return onTechnicalChange("technology_value", e.target.value, i);
-              },
-              disabled: !is_selected,
-              required: true
-            })]
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
-            className: "col-sm-3",
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("label", {
-              children: "Expert\xA0"
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("input", {
-              className: "",
-              type: "radio",
-              name: "technology_value_" + n,
-              value: "Expert",
-              checked: language == "Expert" ? true : false,
-              onChange: function onChange(e) {
-                return onTechnicalChange("technology_value", e.target.value, i);
-              },
-              disabled: !is_selected,
-              required: true
-            })]
-          })]
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("hr", {})]
-      });
-    }
-  }, {
-    key: "renderTechnicalExperience",
-    value: function renderTechnicalExperience(expertise) {
-      var _this2 = this;
-
-      var onTechnicalChange = this.props.onTechnicalChange;
-
-      if (expertise && expertise.length > 0) {
-        return expertise.map(function (d, i) {
-          var technology_name = d.technology_name,
-              technology_value = d.technology_value,
-              ability = d.ability,
-              is_selected = d.is_selected;
+      if (exp && exp.length > 0) {
+        return exp.map(function (d, i) {
+          var company = d.company,
+              designation = d.designation,
+              from_date = d.from_date,
+              to_date = d.to_date;
           return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
-            className: "row",
             children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
-              className: "col-md-3",
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("label", {
-                htmlFor: technology_name,
-                children: technology_name
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("input", {
-                id: technology_name,
-                name: technology_name,
-                className: "",
-                type: "checkbox",
-                defaultChecked: is_selected,
-                onChange: function onChange(e) {
-                  return onTechnicalChange(e.target.name, e.target.checked, i, true);
-                },
-                required: true
+              className: "row",
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("span", {
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("strong", {
+                  children: "History "
+                }), ": ", i + 1, " "]
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
+                className: "col-md-1",
+                children: i != 0 ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("button", {
+                  type: "button",
+                  onClick: function onClick() {
+                    return handleRemoveExp(i);
+                  },
+                  className: "btn btn-danger",
+                  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("strong", {
+                    children: "-"
+                  })
+                }) : ''
               })]
-            }), _this2.techNoSyntax(technology_value, is_selected, i, technology_name)]
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+              className: "row",
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+                className: "col-md-5",
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("label", {
+                  className: "form-label",
+                  children: ["Company", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("span", {
+                    className: "form-asterisk",
+                    children: " *"
+                  })]
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("input", {
+                  name: "company",
+                  placeholder: "eg. Google Inc.",
+                  value: company,
+                  maxLength: 25,
+                  className: "form-control",
+                  type: "text",
+                  onChange: function onChange(e) {
+                    return handleExperience(e.target.name, e.target.value, i);
+                  },
+                  required: true
+                })]
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+                className: "col-md-5",
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("label", {
+                  className: "form-label",
+                  children: ["Designation", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("span", {
+                    className: "form-asterisk",
+                    children: " *"
+                  })]
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("input", {
+                  name: "designation",
+                  placeholder: "eg. Sr React Developer",
+                  className: "form-control",
+                  maxLength: 20,
+                  value: designation,
+                  type: "text",
+                  onChange: function onChange(e) {
+                    return handleExperience(e.target.name, e.target.value, i);
+                  },
+                  required: true
+                })]
+              })]
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+              className: "row",
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+                className: "col-md-5",
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("label", {
+                  className: "form-label",
+                  children: ["From", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("span", {
+                    className: "form-asterisk",
+                    children: " *"
+                  })]
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)((react_datepicker__WEBPACK_IMPORTED_MODULE_4___default()), {
+                  className: "form-control",
+                  name: "from_date",
+                  selected: from_date,
+                  onChange: function onChange(e) {
+                    return handleExperience('from_date', e, i);
+                  },
+                  value: from_date,
+                  peekNextMonth: true,
+                  showMonthDropdown: true,
+                  showYearDropdown: true,
+                  dropdownMode: "select",
+                  placeholder: "dd/mm/yyyy",
+                  required: true
+                })]
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+                className: "col-md-5",
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("label", {
+                  className: "form-label",
+                  children: ["TO", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("span", {
+                    className: "form-asterisk",
+                    children: " *"
+                  })]
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)((react_datepicker__WEBPACK_IMPORTED_MODULE_4___default()), {
+                  className: "form-control",
+                  name: "to_date",
+                  selected: to_date,
+                  onChange: function onChange(e) {
+                    return handleExperience('to_date', e, i);
+                  },
+                  value: to_date,
+                  peekNextMonth: true,
+                  showMonthDropdown: true,
+                  showYearDropdown: true,
+                  dropdownMode: "select",
+                  placeholder: "dd/mm/yyyy",
+                  required: true
+                })]
+              })]
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("hr", {})]
           }, i);
         });
       } else return false;
+    }
+    /**Form error handling */
+
+  }, {
+    key: "isError",
+    value: function isError() {
+      var state = this.props.state;
+      var isError = false;
+
+      if (state) {
+        if (state.work_experience && state.work_experience.length > 0) {
+          state.work_experience.map(function (d, i) {
+            if (d.company == '' || d.designation == '' || d.from_date == '' || d.to_date == '') {
+              isError = true;
+            }
+          });
+        }
+
+        if (state.education_details && state.education_details.length > 0) {
+          state.education_details.map(function (d, i) {
+            if (d.year == '' || d.education_board == '' || d.percentage == '') {
+              isError = true;
+            }
+          });
+        }
+      }
+
+      return isError;
     }
   }, {
     key: "render",
     value: function render() {
-      var _this$props = this.props,
-          onChange = _this$props.onChange,
-          onLanguageChange = _this$props.onLanguageChange,
-          onSubmit = _this$props.onSubmit,
-          onHandleDate = _this$props.onHandleDate,
-          state = _this$props.state,
-          handleFormSteps = _this$props.handleFormSteps;
+      var _this$props3 = this.props,
+          onChange = _this$props3.onChange,
+          onLanguageChange = _this$props3.onLanguageChange,
+          onSubmit = _this$props3.onSubmit,
+          onHandleDate = _this$props3.onHandleDate,
+          state = _this$props3.state,
+          handleFormSteps = _this$props3.handleFormSteps,
+          handleAddMoreEducation = _this$props3.handleAddMoreEducation,
+          handleAddMoreExp = _this$props3.handleAddMoreExp;
       return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("form", {
         onSubmit: onSubmit,
         className: "form",
         noValidate: true,
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("h3", {
-          className: "text-left",
-          children: "Education details"
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
+          className: "form-group",
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+            className: "row",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
+              className: "col-md-10",
+              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("h3", {
+                className: "text-left",
+                children: ["Education details ", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("small", {
+                  children: "(SSC, HSC,Graduation, Master Degree)"
+                })]
+              })
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
+              className: "col-md-2",
+              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("button", {
+                type: "button",
+                onClick: function onClick() {
+                  return handleAddMoreEducation();
+                },
+                className: "form-item btn btn-success",
+                children: "Add More"
+              })
+            })]
+          })
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
           className: "form-group",
-          children: [this.renderLanguages(state.known_languages), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
-            className: "form-message",
-            children: state.formErrors.fullName
+          children: [state.education_details && state.education_details.length > 4 ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("span", {
+            children: "Max 10 records allowed."
+          }) : '', this.renderEducation(state.education_details)]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("hr", {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+          className: "row",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
+            className: "col-md-4",
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("h3", {
+              className: "text-left",
+              children: "Work Experience"
+            })
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
+            className: "col-md-3"
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
+            className: "col-md-2",
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("button", {
+              type: "button",
+              onClick: function onClick() {
+                return handleAddMoreExp();
+              },
+              className: "form-item btn btn-success",
+              children: "Add More"
+            })
           })]
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("h3", {
-          className: "text-left",
-          children: "Work Experience"
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
           className: "form-group",
-          children: [this.renderTechnicalExperience(state.technical_expertise), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
-            className: "form-message",
-            children: state.formErrors.fullName
-          })]
+          children: this.renderWorkExp(state.work_experience)
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
           className: "row",
           children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
@@ -3411,6 +3586,7 @@ var Form2 = /*#__PURE__*/function (_Component) {
                 onClick: function onClick(e) {
                   return onSubmit(e, 2);
                 },
+                disabled: this.isError(),
                 children: "Next Step"
               })
             })
