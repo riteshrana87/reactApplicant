@@ -108,7 +108,8 @@ class AppMaster extends Component {
       current_ctc:'',
       notice_period : '',
       show: "",
-      formSteps:1
+      formSteps:0,
+
     };
 
     //bind functions
@@ -331,6 +332,24 @@ class AppMaster extends Component {
   }
 
   handleSubmit(e,numeric) {
+
+    if(this.stepZeroFormError()){
+        Swal.fire({
+            type: "error",
+            title: "Oops...",
+            text: "required field error!"
+          });
+          return false;
+    }
+    if(numeric == 2 && this.stepSecondFormError()){
+        Swal.fire({
+            type: "error",
+            title: "Oops...",
+            text: "required field error!"
+          });
+          return false;
+    }
+
     if(numeric != ''){
         this.handleFormSteps(numeric);
         return false;
@@ -365,6 +384,7 @@ class AppMaster extends Component {
     }
   }
 
+/**Form error handling */
   stepZeroFormError(){
     if(this.state.formErrors.fullName === "Perfect!" &&
     this.state.formErrors.birthDate === "" &&
@@ -377,6 +397,26 @@ class AppMaster extends Component {
     }else{
         return true;
     }
+  }
+  /**Form error handling */
+  stepSecondFormError(){
+    const{work_experience,education_details} = this.state;
+    var isError = false;
+    if(work_experience && work_experience.length > 0){
+        work_experience.map((d,i) => {
+            if(d.company == '' || d.designation == '' || d.from_date == '' || d.to_date == ''){
+                isError = true;
+            }
+        })
+    }
+    if(education_details && education_details.length > 0){
+        education_details.map((d,i) => {
+            if(d.year == '' || d.education_board == '' || d.percentage == ''){
+                isError = true;
+            }
+        })
+    }
+    return isError;
   }
 
   onFormChangeSteps(){

@@ -2369,7 +2369,7 @@ var AppMaster = /*#__PURE__*/function (_Component) {
       current_ctc: '',
       notice_period: '',
       show: "",
-      formSteps: 1
+      formSteps: 0
     }; //bind functions
 
     _this.handleChange = _this.handleChange.bind(_assertThisInitialized(_this));
@@ -2611,6 +2611,24 @@ var AppMaster = /*#__PURE__*/function (_Component) {
   }, {
     key: "handleSubmit",
     value: function handleSubmit(e, numeric) {
+      if (this.stepZeroFormError()) {
+        sweetalert2__WEBPACK_IMPORTED_MODULE_2___default().fire({
+          type: "error",
+          title: "Oops...",
+          text: "required field error!"
+        });
+        return false;
+      }
+
+      if (numeric == 2 && this.stepSecondFormError()) {
+        sweetalert2__WEBPACK_IMPORTED_MODULE_2___default().fire({
+          type: "error",
+          title: "Oops...",
+          text: "required field error!"
+        });
+        return false;
+      }
+
       if (numeric != '') {
         this.handleFormSteps(numeric);
         return false;
@@ -2628,6 +2646,8 @@ var AppMaster = /*#__PURE__*/function (_Component) {
         });
       }
     }
+    /**Form error handling */
+
   }, {
     key: "stepZeroFormError",
     value: function stepZeroFormError() {
@@ -2636,6 +2656,34 @@ var AppMaster = /*#__PURE__*/function (_Component) {
       } else {
         return true;
       }
+    }
+    /**Form error handling */
+
+  }, {
+    key: "stepSecondFormError",
+    value: function stepSecondFormError() {
+      var _this$state = this.state,
+          work_experience = _this$state.work_experience,
+          education_details = _this$state.education_details;
+      var isError = false;
+
+      if (work_experience && work_experience.length > 0) {
+        work_experience.map(function (d, i) {
+          if (d.company == '' || d.designation == '' || d.from_date == '' || d.to_date == '') {
+            isError = true;
+          }
+        });
+      }
+
+      if (education_details && education_details.length > 0) {
+        education_details.map(function (d, i) {
+          if (d.year == '' || d.education_board == '' || d.percentage == '') {
+            isError = true;
+          }
+        });
+      }
+
+      return isError;
     }
   }, {
     key: "onFormChangeSteps",
@@ -3188,7 +3236,6 @@ var Form = /*#__PURE__*/function (_Component) {
           children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("button", {
             className: "form-item form-submit-button",
             type: "button",
-            disabled: onError(),
             onClick: function onClick(e) {
               return onSubmit(e, 1);
             },
@@ -3464,34 +3511,6 @@ var Form2 = /*#__PURE__*/function (_Component) {
         });
       } else return false;
     }
-    /**Form error handling */
-
-  }, {
-    key: "isError",
-    value: function isError() {
-      var state = this.props.state;
-      var isError = false;
-
-      if (state) {
-        if (state.work_experience && state.work_experience.length > 0) {
-          state.work_experience.map(function (d, i) {
-            if (d.company == '' || d.designation == '' || d.from_date == '' || d.to_date == '') {
-              isError = true;
-            }
-          });
-        }
-
-        if (state.education_details && state.education_details.length > 0) {
-          state.education_details.map(function (d, i) {
-            if (d.year == '' || d.education_board == '' || d.percentage == '') {
-              isError = true;
-            }
-          });
-        }
-      }
-
-      return isError;
-    }
   }, {
     key: "render",
     value: function render() {
@@ -3586,7 +3605,6 @@ var Form2 = /*#__PURE__*/function (_Component) {
                 onClick: function onClick(e) {
                   return onSubmit(e, 2);
                 },
-                disabled: this.isError(),
                 children: "Next Step"
               })
             })

@@ -173,28 +173,7 @@ class Form2 extends Component {
     } else return false;
   }
 
-  /**Form error handling */
-  isError(){
-    const{state} = this.props;
-    var isError = false;
-    if(state){
-        if(state.work_experience && state.work_experience.length > 0){
-            state.work_experience.map((d,i) => {
-                if(d.company == '' || d.designation == '' || d.from_date == '' || d.to_date == ''){
-                    isError = true;
-                }
-            })
-        }
-        if(state.education_details && state.education_details.length > 0){
-            state.education_details.map((d,i) => {
-                if(d.year == '' || d.education_board == '' || d.percentage == ''){
-                    isError = true;
-                }
-            })
-        }
-    }
-    return isError;
-  }
+
 
   render() {
     const {
@@ -270,7 +249,6 @@ class Form2 extends Component {
                             className="form-item form-submit-button"
                             type="button"
                             onClick={(e) => onSubmit(e,2)}
-                            disabled={this.isError()}
                         >
                             Next Step
                         </button>

@@ -158,11 +158,11 @@ class Form extends Component {
             </div>
               */}
             {/* submit */}
+
             <div className="form-submit form-item">
               <button
                 className="form-item form-submit-button"
                 type="button"
-                disabled={onError()}
                 onClick={(e) => onSubmit(e,1)}
               >
                 Next Step
